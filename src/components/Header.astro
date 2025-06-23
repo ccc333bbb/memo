@@ -4,6 +4,12 @@ import { getLangFromUrl, useTranslations } from '../i18n/utils';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
+
+const languages = {
+  'en-US': { name: 'English', url: '/en-US/' },
+  'zh-CN': { name: '中文 (简)', url: '/zh-CN/' },
+  'zh-TW': { name: '中文 (繁)', url: '/zh-TW/' },
+};
 ---
 
 <header class="site-header">
@@ -12,11 +18,11 @@ const t = useTranslations(lang);
         <div class="nav-links">
             <a href={`/${lang}/blog/`} class="nav-link">{t('nav.blog')}</a>
             
-            {lang === 'zh-CN' ? (
-                <a href="/en-US/" class="nav-link lang-switcher">English</a>
-            ) : (
-                <a href="/zh-CN/" class="nav-link lang-switcher">中文</a>
-            )}
+            <div class="lang-switcher">
+                {Object.entries(languages).map(([id, { name, url }]) => (
+                    id !== lang && <a href={url} class="lang-link">{name}</a>
+                ))}
+            </div>
         </div>
     </nav>
 </header>
@@ -74,6 +80,24 @@ const t = useTranslations(lang);
     }
 
     .lang-switcher {
+        display: flex;
+        gap: 0.5rem;
+        border: 1px solid rgba(44, 62, 80, 0.1);
+        border-radius: 20px;
+        padding: 0.2rem;
+    }
+
+    .lang-link {
+        padding: 0.3rem 0.8rem;
+        border-radius: 15px;
+        font-size: 0.9rem;
+        text-decoration: none;
+        color: #34495e;
+        transition: background 0.3s ease;
+    }
+
+    .lang-link:hover {
         background: rgba(44, 62, 80, 0.1);
+        color: #2c3e50;
     }
 </style> 

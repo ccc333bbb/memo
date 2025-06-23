@@ -7,7 +7,7 @@ export type UiKey = keyof typeof ui['zh-CN'];
 export function getLangFromUrl(url: URL) {
   const [, lang] = url.pathname.split('/');
   if (lang in ui) return lang as Locale;
-  return 'zh-CN';
+  return 'en-US';
 }
 
 export function useTranslations(lang: Locale) {

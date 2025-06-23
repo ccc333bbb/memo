@@ -19,4 +19,14 @@ export const ui = {
     'blog.title': 'Blog Posts',
     'blog.subtitle': 'A list of all articles',
   },
+  'zh-TW': {
+    'nav.home': '首頁',
+    'nav.blog': '部落格',
+    'home.name': 'ccc333bbb',
+    'home.title': 'Dark Walker',
+    'home.quote': '千里之行，始於足下。每一個偉大的旅程都始於勇敢的第一步。',
+    'home.quote.author': '老子',
+    'blog.title': '部落格文章',
+    'blog.subtitle': '所有文章列表',
+  },
 } as const; 

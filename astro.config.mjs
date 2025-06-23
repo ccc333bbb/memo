@@ -7,8 +7,8 @@ export default defineConfig({
   base: '/memo',
   output: 'static',
   i18n: {
-    defaultLocale: 'zh-CN',
-    locales: ['zh-CN', 'en-US'],
+    defaultLocale: 'en-US',
+    locales: ['en-US', 'zh-CN', 'zh-TW'],
     routing: {
       prefixDefaultLocale: true,
     },
