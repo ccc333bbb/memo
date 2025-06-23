@@ -1,4 +1,9 @@
 ---
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
 // 水墨風格個人首頁組件
 ---
 
@@ -17,14 +22,14 @@
 			<div class="portrait"></div>
 		</div>
 		
-		<h1 class="name">ccc333bbb</h1>
-		<p class="title">Dark Walker</p>
+		<h1 class="name">{t('home.name')}</h1>
+		<p class="title">{t('home.title')}</p>
 		
 		<div class="quote-section">
 			<p class="quote">
-				千里之行，始于足下。每一个伟大的旅程都始于勇敢的第一步。
+				{t('home.quote')}
 			</p>
-			<p class="quote-author">— 老子</p>
+			<p class="quote-author">— {t('home.quote.author')}</p>
 		</div>
 	</div>
 </div>

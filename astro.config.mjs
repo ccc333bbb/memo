@@ -5,5 +5,12 @@ import { defineConfig } from 'astro/config';
 export default defineConfig({
   site: 'https://ccc333bbb.github.io',
   base: '/memo',
-  output: 'static'
+  output: 'static',
+  i18n: {
+    defaultLocale: 'zh-CN',
+    locales: ['zh-CN', 'en-US'],
+    routing: {
+      prefixDefaultLocale: true,
+    },
+  }
 });

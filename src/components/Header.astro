@@ -1,11 +1,23 @@
 ---
 // 導覽列組件
+import { getLangFromUrl, useTranslations } from '../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 ---
 
 <header class="site-header">
     <nav class="navigation">
-        <a href="/" class="nav-link logo">ccc333bbb</a>
-        <a href="/blog" class="nav-link">部落格</a>
+        <a href={`/${lang}/`} class="nav-link logo">ccc333bbb</a>
+        <div class="nav-links">
+            <a href={`/${lang}/blog/`} class="nav-link">{t('nav.blog')}</a>
+            
+            {lang === 'zh-CN' ? (
+                <a href="/en-US/" class="nav-link lang-switcher">English</a>
+            ) : (
+                <a href="/zh-CN/" class="nav-link lang-switcher">中文</a>
+            )}
+        </div>
     </nav>
 </header>
 
@@ -53,5 +65,15 @@
     .nav-link:hover {
         background: rgba(44, 62, 80, 0.9);
         color: white;
+    }
+
+    .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .lang-switcher {
+        background: rgba(44, 62, 80, 0.1);
     }
 </style> 
