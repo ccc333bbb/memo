@@ -2,4 +2,20 @@
 // This page is intentionally left blank.
 // It will redirect to the default language ('/zh-CN/')
 // based on the i18n routing configuration.
---- 
+
+// 重定向到預設語言頁面
+export const prerender = false;
+---
+
+<script>
+  // 客戶端重定向到預設語言
+  const defaultLang = 'en-US';
+  const base = import.meta.env.BASE_URL;
+  window.location.href = `${base}${defaultLang}/`;
+</script>
+
+<!-- 如果 JavaScript 被禁用，顯示重定向信息 -->
+<noscript>
+  <meta http-equiv="refresh" content="0;url=/memo/en-US/">
+  <p>正在重定向到 <a href="/memo/en-US/">英文版</a>...</p>
+</noscript> 

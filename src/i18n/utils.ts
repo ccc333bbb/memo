@@ -5,8 +5,16 @@ export type Locale = keyof typeof ui;
 export type UiKey = keyof typeof ui['zh-CN'];
 
 export function getLangFromUrl(url: URL) {
-  const [, lang] = url.pathname.split('/');
-  if (lang in ui) return lang as Locale;
+  const pathname = url.pathname;
+  // 移除 base 路徑 (/memo)
+  const pathWithoutBase = pathname.replace(/^\/memo/, '');
+  const segments = pathWithoutBase.split('/').filter(Boolean);
+  
+  if (segments.length > 0) {
+    const lang = segments[0];
+    if (lang in ui) return lang as Locale;
+  }
+  
   return 'en-US';
 }
 

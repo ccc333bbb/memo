@@ -137,3 +137,99 @@ MIT License
 **開發者：** ccc333bbb  
 **職業：** Dark Walker  
 **網站：** https://ccc333bbb.github.io/memo/
+
+# Capricious Centauri
+
+一個基於 Astro 的多語言部落格，支持 GitHub Issues 聯動功能。
+
+## 功能特色
+
+- 🌍 多語言支持 (en-US, zh-CN, zh-TW)
+- 📝 GitHub Issues 聯動
+- 🚀 自動化工作流程
+- 📱 響應式設計
+
+## GitHub Issues 聯動功能
+
+這個部落格系統集成了 GitHub Issues，讓您可以：
+
+- 創建 blog post 時自動創建對應的 GitHub issue
+- 管理文章狀態 (draft/published)
+- 通過 commit 信息自動關閉 issue
+- 簡化寫作和發布流程
+
+### 快速開始
+
+1. **配置環境變量**
+   ```bash
+   cp env.example .env
+   # 編輯 .env 文件，填入您的 GitHub Personal Access Token
+   ```
+
+2. **創建新的 blog post**
+   ```bash
+   npm run blog:create
+   ```
+
+3. **查看所有 blog posts**
+   ```bash
+   npm run blog:list
+   ```
+
+4. **發布 blog post**
+   ```bash
+   npm run blog:publish <issue-number>
+   ```
+
+### 工作流程
+
+1. **創建文章** → 自動創建 GitHub issue (draft 狀態)
+2. **撰寫內容** → 在本地編輯 markdown 文件
+3. **準備發布** → 使用 `npm run blog:publish` 更新狀態
+4. **提交代碼** → 在 commit 信息中包含 `Closes #<issue-number>` 自動關閉 issue
+
+## 開發
+
+```bash
+# 安裝依賴
+npm install
+
+# 啟動開發服務器
+npm run dev
+
+# 構建生產版本
+npm run build
+
+# 預覽生產版本
+npm run preview
+```
+
+## 項目結構
+
+```
+src/
+├── pages/          # 頁面文件
+│   ├── en-US/     # 英文頁面
+│   ├── zh-CN/     # 簡體中文頁面
+│   └── zh-TW/     # 繁體中文頁面
+├── components/     # 組件
+├── layouts/        # 布局
+└── i18n/          # 國際化配置
+scripts/
+├── github-api.js   # GitHub API 工具類
+├── create-blog.js  # 創建 blog post 腳本
+├── publish-blog.js # 發布 blog post 腳本
+└── list-blogs.js   # 列出所有 blog posts 腳本
+```
+
+## 環境變量
+
+| 變量名 | 描述 | 預設值 |
+|--------|------|--------|
+| `GITHUB_TOKEN` | GitHub Personal Access Token | 必需 |
+| `GITHUB_OWNER` | GitHub 用戶名 | ccc333bbb |
+| `GITHUB_REPO` | GitHub 倉庫名 | capricious-centauri |
+
+## 許可證
+
+MIT License

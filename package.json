@@ -6,9 +6,17 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "blog:create": "node scripts/create-blog.js",
+    "blog:publish": "node scripts/publish-blog.js",
+    "blog:list": "node scripts/list-blogs.js"
   },
   "dependencies": {
-    "astro": "^5.10.0"
+    "astro": "^5.10.0",
+    "@octokit/rest": "^22.0.0",
+    "dotenv": "^16.4.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0"
   }
 }
