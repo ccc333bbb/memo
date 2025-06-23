@@ -1,0 +1,97 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+// 使用 Astro.glob() 獲取所有部落格文章
+const posts = await Astro.glob('./*.md');
+---
+
+<Layout>
+    <main class="blog-list-container">
+        <h1 class="title">部落格文章</h1>
+        <p class="subtitle">所有文章列表</p>
+        <ul class="post-list">
+            {posts.map((post) => (
+                <li class="post-item">
+                    <a href={post.url} class="post-link">
+                        <div class="post-info">
+                            <h2 class="post-title">{post.frontmatter.title}</h2>
+                            <p class="post-date">{new Date(post.frontmatter.pubDate).toLocaleDateString('zh-CN')}</p>
+                        </div>
+                        <p class="post-description">{post.frontmatter.description}</p>
+                    </a>
+                </li>
+            ))}
+        </ul>
+    </main>
+</Layout>
+
+<style>
+    .blog-list-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 4rem 2rem;
+        min-height: 100vh;
+    }
+
+    .title {
+        font-family: 'Noto Serif SC', serif;
+        font-size: 2.5rem;
+        text-align: center;
+        margin-bottom: 0.5rem;
+        color: #2c3e50;
+    }
+
+    .subtitle {
+        text-align: center;
+        color: #7f8c8d;
+        margin-bottom: 3rem;
+    }
+
+    .post-list {
+        list-style: none;
+        padding: 0;
+    }
+
+    .post-item {
+        margin-bottom: 2rem;
+        transition: transform 0.3s ease;
+    }
+
+    .post-item:hover {
+        transform: translateY(-5px);
+    }
+
+    .post-link {
+        display: block;
+        padding: 2rem;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 15px;
+        text-decoration: none;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        border: 1px solid rgba(255,255,255,0.3);
+        backdrop-filter: blur(5px);
+    }
+
+    .post-info {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        margin-bottom: 1rem;
+    }
+
+    .post-title {
+        font-family: 'Noto Serif SC', serif;
+        font-size: 1.5rem;
+        color: #2c3e50;
+    }
+
+    .post-date {
+        color: #7f8c8d;
+        font-size: 0.9rem;
+    }
+
+    .post-description {
+        color: #34495e;
+        line-height: 1.6;
+    }
+</style> 

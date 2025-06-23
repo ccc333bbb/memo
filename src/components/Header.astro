@@ -1,0 +1,57 @@
+---
+// 導覽列組件
+---
+
+<header class="site-header">
+    <nav class="navigation">
+        <a href="/" class="nav-link logo">ccc333bbb</a>
+        <a href="/blog" class="nav-link">部落格</a>
+    </nav>
+</header>
+
+<style>
+    .site-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        padding: 1rem 2rem;
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(10px);
+        z-index: 1000;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        transition: background 0.3s ease;
+    }
+
+    .site-header:hover {
+        background: rgba(255, 255, 255, 0.4);
+    }
+
+    .navigation {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .nav-link {
+        color: #2c3e50;
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 1.1rem;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    .nav-link.logo {
+        font-family: 'Noto Serif SC', serif;
+        font-weight: 700;
+    }
+
+    .nav-link:hover {
+        background: rgba(44, 62, 80, 0.9);
+        color: white;
+    }
+</style> 
