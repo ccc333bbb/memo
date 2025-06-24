@@ -6,8 +6,9 @@ export type UiKey = keyof typeof ui['zh-CN'];
 
 export function getLangFromUrl(url: URL) {
   const pathname = url.pathname;
-  // 移除 base 路徑 (/memo)
-  const pathWithoutBase = pathname.replace(/^\/memo/, '');
+  // 移除 base 路徑 - 使用動態 base 路徑
+  const base = import.meta.env.BASE_URL || '/';
+  const pathWithoutBase = pathname.replace(new RegExp(`^${base.replace(/\/$/, '')}`), '');
   const segments = pathWithoutBase.split('/').filter(Boolean);
   
   if (segments.length > 0) {
