@@ -4,7 +4,7 @@ import { useTranslations, getLangFromUrl } from '../../../i18n/utils';
 
 const lang = getLangFromUrl(Astro.url);
 // 使用 Astro.glob() 獲取所有部落格文章
-const posts = await Astro.glob('./*.md');
+const posts = Object.values(import.meta.glob('./*.md', { eager: true }));
 ---
 
 <Layout>
