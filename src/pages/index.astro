@@ -16,6 +16,6 @@ export const prerender = false;
 
 <!-- 如果 JavaScript 被禁用，顯示重定向信息 -->
 <noscript>
-  <meta http-equiv="refresh" content="0;url=/memo/en-US/">
-  <p>正在重定向到 <a href="/memo/en-US/">英文版</a>...</p>
+  <meta http-equiv="refresh" content="0;url={import.meta.env.BASE_URL}en-US/">
+  <p>正在重定向到 <a href="{import.meta.env.BASE_URL}en-US/">英文版</a>...</p>
 </noscript> 

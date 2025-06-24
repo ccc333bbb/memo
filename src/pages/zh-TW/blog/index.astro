@@ -3,21 +3,22 @@ import Layout from '../../../layouts/Layout.astro';
 import { useTranslations, getLangFromUrl } from '../../../i18n/utils';
 
 const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 // 使用 Astro.glob() 獲取所有部落格文章
 const posts = await Astro.glob('./*.md');
 ---
 
 <Layout>
     <main class="blog-list-container">
-        <h1 class="title">部落格文章</h1>
-        <p class="subtitle">所有文章列表</p>
+        <h1 class="title">{t('blog.title')}</h1>
+        <p class="subtitle">{t('blog.subtitle')}</p>
         <ul class="post-list">
             {posts.map((post) => (
                 <li class="post-item">
                     <a href={post.url} class="post-link">
                         <div class="post-info">
                             <h2 class="post-title">{post.frontmatter.title}</h2>
-                            <p class="post-date">{new Date(post.frontmatter.pubDate).toLocaleDateString('zh-CN')}</p>
+                            <p class="post-date">{new Date(post.frontmatter.pubDate).toLocaleDateString('zh-TW')}</p>
                         </div>
                         <p class="post-description">{post.frontmatter.description}</p>
                     </a>
