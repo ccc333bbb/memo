@@ -31,7 +31,7 @@ const languages = [
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ccc333bbb - Language Selection</title>
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}favicon.svg`} />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;700&family=Noto+Sans:wght@300;400;500&display=swap" rel="stylesheet">
@@ -191,20 +191,18 @@ const languages = [
         }
     </style>
 
-    <script>
+    <script define:vars={{ baseUrl }}>
         let countdown = 5;
         let redirectTimer;
         let countdownInterval;
         
         const countdownElement = document.getElementById('countdown');
         const cancelButton = document.getElementById('cancel-redirect');
-        const base = import.meta.env.BASE_URL;
-        const baseUrl = base.endsWith('/') ? base : base + '/';
         
         function updateCountdown() {
             countdownElement.textContent = countdown;
             if (countdown <= 0) {
-                window.location.href = `${baseUrl}en-US/`;
+                window.location.href = baseUrl + 'en-US/';
             }
             countdown--;
         }
