@@ -8,9 +8,9 @@ const t = useTranslations(lang);
 const base = import.meta.env.BASE_URL;
 
 const languages = {
-  'en-US': { name: 'English', url: `${base}en-US/` },
-  'zh-CN': { name: '中文 (简)', url: `${base}zh-CN/` },
-  'zh-TW': { name: '中文 (繁)', url: `${base}zh-TW/` },
+  'en-US': { name: 'English', url: `${base.endsWith('/') ? base : base + '/'}en-US/` },
+  'zh-CN': { name: '中文 (简)', url: `${base.endsWith('/') ? base : base + '/'}zh-CN/` },
+  'zh-TW': { name: '中文 (繁)', url: `${base.endsWith('/') ? base : base + '/'}zh-TW/` },
 };
 ---
 

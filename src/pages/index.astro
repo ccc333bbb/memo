@@ -1,20 +1,230 @@
 ---
-// This page is intentionally left blank.
-// It will redirect to the default language ('/en-US/')
-// based on the i18n routing configuration.
+// Language selection page for the root URL
+const base = import.meta.env.BASE_URL;
+const baseUrl = base.endsWith('/') ? base : base + '/';
 
-// 重定向到預設語言頁面
+const languages = [
+  { 
+    code: 'en-US', 
+    name: 'English', 
+    description: 'Dark Walker\'s Blog',
+    url: `${baseUrl}en-US/` 
+  },
+  { 
+    code: 'zh-CN', 
+    name: '中文 (简体)', 
+    description: 'Dark Walker 的部落格',
+    url: `${baseUrl}zh-CN/` 
+  },
+  { 
+    code: 'zh-TW', 
+    name: '中文 (繁體)', 
+    description: 'Dark Walker 的部落格',
+    url: `${baseUrl}zh-TW/` 
+  },
+];
 ---
 
-<script>
-  // 客戶端重定向到預設語言
-  const defaultLang = 'en-US';
-  const base = import.meta.env.BASE_URL;
-  window.location.href = `${base}${defaultLang}/`;
-</script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ccc333bbb - Language Selection</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;700&family=Noto+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="language-selector">
+            <h1 class="title">ccc333bbb</h1>
+            <p class="subtitle">Choose your language / 選擇語言</p>
+            
+            <div class="language-grid">
+                {languages.map((lang) => (
+                    <a href={lang.url} class="language-card">
+                        <h2 class="lang-name">{lang.name}</h2>
+                        <p class="lang-description">{lang.description}</p>
+                        <span class="lang-code">{lang.code}</span>
+                    </a>
+                ))}
+            </div>
+            
+            <div class="auto-redirect">
+                <p>Auto-redirecting to English in <span id="countdown">5</span> seconds...</p>
+                <button id="cancel-redirect">Stay on this page</button>
+            </div>
+        </div>
+    </div>
 
-<!-- 如果 JavaScript 被禁用，顯示重定向信息 -->
-<noscript>
-  <meta http-equiv="refresh" content="0;url={import.meta.env.BASE_URL}en-US/">
-  <p>正在重定向到 <a href="{import.meta.env.BASE_URL}en-US/">英文版</a>...</p>
-</noscript> 
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+            padding: 2rem;
+        }
+
+        .language-selector {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            text-align: center;
+        }
+
+        .title {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 2.5rem;
+            font-weight: 300;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            color: #7f8c8d;
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        .language-grid {
+            display: grid;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .language-card {
+            display: block;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            position: relative;
+        }
+
+        .language-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            border-color: #3498db;
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .lang-name {
+            font-size: 1.3rem;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .lang-description {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .lang-code {
+            font-size: 0.8rem;
+            color: #95a5a6;
+            font-family: monospace;
+        }
+
+        .auto-redirect {
+            padding: 1rem;
+            background: rgba(52, 152, 219, 0.1);
+            border-radius: 10px;
+            border: 1px solid rgba(52, 152, 219, 0.2);
+        }
+
+        .auto-redirect p {
+            color: #2980b9;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        #cancel-redirect {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.3s ease;
+        }
+
+        #cancel-redirect:hover {
+            background: #2980b9;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .language-selector {
+                padding: 2rem;
+            }
+            
+            .title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+
+    <script>
+        let countdown = 5;
+        let redirectTimer;
+        let countdownInterval;
+        
+        const countdownElement = document.getElementById('countdown');
+        const cancelButton = document.getElementById('cancel-redirect');
+        const base = import.meta.env.BASE_URL;
+        const baseUrl = base.endsWith('/') ? base : base + '/';
+        
+        function updateCountdown() {
+            countdownElement.textContent = countdown;
+            if (countdown <= 0) {
+                window.location.href = `${baseUrl}en-US/`;
+            }
+            countdown--;
+        }
+        
+        function startRedirect() {
+            updateCountdown();
+            countdownInterval = setInterval(updateCountdown, 1000);
+        }
+        
+        function cancelRedirect() {
+            clearInterval(countdownInterval);
+            document.querySelector('.auto-redirect').style.display = 'none';
+        }
+        
+        cancelButton.addEventListener('click', cancelRedirect);
+        
+        // Start auto-redirect after page loads
+        window.addEventListener('load', () => {
+            setTimeout(startRedirect, 1000);
+        });
+    </script>
+</body>
+</html> 
