@@ -9,6 +9,9 @@ import Layout from '../../layouts/Layout.astro';
             <a href="/memo/" class="nav-logo">ccc333bbb</a>
             <div class="nav-links">
                 <a href="/memo/tw/blog/" class="nav-link">部落格</a>
+                <a href="/memo/tw/thoughts/" class="nav-link">想法</a>
+                <a href="/memo/tw/projects/" class="nav-link">專案</a>
+                <a href="/memo/tw/bookmarks/" class="nav-link">書籤</a>
                 <div class="lang-switcher">
                     <a href="/memo/en/" class="lang-link">En</a>
                     <a href="/memo/zh/" class="lang-link">简中</a>
@@ -45,6 +48,21 @@ import Layout from '../../layouts/Layout.astro';
                     <div class="card-icon">📝</div>
                     <h3>部落格</h3>
                     <p>我的思考與記錄</p>
+                </a>
+                <a href="/memo/tw/thoughts/" class="nav-card glass-effect">
+                    <div class="card-icon">💭</div>
+                    <h3>想法</h3>
+                    <p>快速的想法與觀察</p>
+                </a>
+                <a href="/memo/tw/projects/" class="nav-card glass-effect">
+                    <div class="card-icon">🚀</div>
+                    <h3>專案</h3>
+                    <p>我建構與參與的專案</p>
+                </a>
+                <a href="/memo/tw/bookmarks/" class="nav-card glass-effect">
+                    <div class="card-icon">🔖</div>
+                    <h3>書籤</h3>
+                    <p>精選的連結與資源</p>
                 </a>
             </div>
         </div>
@@ -214,6 +232,7 @@ import Layout from '../../layouts/Layout.astro';
     /* 導覽卡片 */
     .navigation-cards {
         display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
         gap: 1.5rem;
         animation: fadeInUp 1s ease-out 1.1s both;
     }
