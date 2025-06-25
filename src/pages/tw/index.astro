@@ -1,24 +1,10 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import Navigation from '../../components/Navigation.astro';
 ---
 
 <Layout title="ccc333bbb - Dark Walker 的備忘錄" lang="zh-TW">
-    <!-- 導覽列 -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="/memo/" class="nav-logo">ccc333bbb</a>
-            <div class="nav-links">
-                <a href="/memo/tw/blog/" class="nav-link">部落格</a>
-                <a href="/memo/tw/thoughts/" class="nav-link">想法</a>
-                <a href="/memo/tw/projects/" class="nav-link">專案</a>
-                <a href="/memo/tw/bookmarks/" class="nav-link">書籤</a>
-                <div class="lang-switcher">
-                    <a href="/memo/en/" class="lang-link">En</a>
-                    <a href="/memo/zh/" class="lang-link">简中</a>
-                </div>
-            </div>
-        </div>
-    </nav>
+    <Navigation lang="tw" currentPath={Astro.url.pathname} />
 
     <!-- 主要內容 -->
     <main class="main-content">
@@ -64,78 +50,17 @@ import Layout from '../../layouts/Layout.astro';
                     <h3>書籤</h3>
                     <p>精選的連結與資源</p>
                 </a>
+                <a href="/memo/tw/movie-review/" class="nav-card glass-effect">
+                    <div class="card-icon">🎬</div>
+                    <h3>觀影心得</h3>
+                    <p>電影思考與評論</p>
+                </a>
             </div>
         </div>
     </main>
 </Layout>
 
 <style>
-    /* 導覽列 */
-    .navbar {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        z-index: 100;
-        background: rgba(255, 255, 255, 0.9);
-        backdrop-filter: blur(10px);
-        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    }
-    
-    .nav-container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 1rem 2rem;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-    
-    .nav-logo {
-        font-family: 'Noto Serif SC', serif;
-        font-size: 1.5rem;
-        font-weight: 500;
-        color: #2c3e50;
-        text-decoration: none;
-    }
-    
-    .nav-links {
-        display: flex;
-        align-items: center;
-        gap: 2rem;
-    }
-    
-    .nav-link {
-        color: #2c3e50;
-        text-decoration: none;
-        font-weight: 500;
-        transition: color 0.3s ease;
-    }
-    
-    .nav-link:hover {
-        color: #3498db;
-    }
-    
-    .lang-switcher {
-        display: flex;
-        gap: 0.5rem;
-    }
-    
-    .lang-link {
-        padding: 0.5rem 1rem;
-        background: rgba(52, 152, 219, 0.1);
-        color: #3498db;
-        text-decoration: none;
-        border-radius: 20px;
-        font-size: 0.9rem;
-        transition: all 0.3s ease;
-    }
-    
-    .lang-link:hover {
-        background: #3498db;
-        color: white;
-    }
-    
     /* 主要內容 */
     .main-content {
         position: relative;
@@ -221,7 +146,6 @@ import Layout from '../../layouts/Layout.astro';
         line-height: 1.6;
         color: #2c3e50;
         margin-bottom: 1rem;
-        font-family: 'Noto Serif SC', serif;
     }
     
     .quote-author {
@@ -281,14 +205,6 @@ import Layout from '../../layouts/Layout.astro';
     
     /* 響應式 */
     @media (max-width: 768px) {
-        .nav-container {
-            padding: 1rem;
-        }
-        
-        .nav-links {
-            gap: 1rem;
-        }
-        
         .main-content {
             padding: 5rem 1rem 2rem;
         }

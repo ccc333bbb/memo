@@ -1,0 +1,179 @@
+---
+export interface Props {
+  lang: 'en' | 'zh' | 'tw';
+  currentPath: string;
+}
+
+const { lang, currentPath } = Astro.props;
+
+// 導航配置
+const navigationConfig = {
+  en: {
+    home: { label: 'Home', path: '/memo/en/' },
+    blog: { label: 'Blog', path: '/memo/en/blog/' },
+    thoughts: { label: 'Thoughts', path: '/memo/en/thoughts/' },
+    projects: { label: 'Projects', path: '/memo/en/projects/' },
+    bookmarks: { label: 'Bookmarks', path: '/memo/en/bookmarks/' },
+    movieReview: { label: 'Movie Reviews', path: '/memo/en/movie-review/' },
+    langSwitcher: {
+      zh: { label: '简中', path: '/memo/zh/' },
+      tw: { label: '繁中', path: '/memo/tw/' }
+    }
+  },
+  zh: {
+    home: { label: '首页', path: '/memo/zh/' },
+    blog: { label: '博客', path: '/memo/zh/blog/' },
+    thoughts: { label: '想法', path: '/memo/zh/thoughts/' },
+    projects: { label: '项目', path: '/memo/zh/projects/' },
+    bookmarks: { label: '书签', path: '/memo/zh/bookmarks/' },
+    movieReview: { label: '观影心得', path: '/memo/zh/movie-review/' },
+    langSwitcher: {
+      en: { label: 'EN', path: '/memo/en/' },
+      tw: { label: '繁中', path: '/memo/tw/' }
+    }
+  },
+  tw: {
+    home: { label: '首頁', path: '/memo/tw/' },
+    blog: { label: '部落格', path: '/memo/tw/blog/' },
+    thoughts: { label: '想法', path: '/memo/tw/thoughts/' },
+    projects: { label: '專案', path: '/memo/tw/projects/' },
+    bookmarks: { label: '書籤', path: '/memo/tw/bookmarks/' },
+    movieReview: { label: '觀影心得', path: '/memo/tw/movie-review/' },
+    langSwitcher: {
+      en: { label: 'EN', path: '/memo/en/' },
+      zh: { label: '简中', path: '/memo/zh/' }
+    }
+  }
+};
+
+const config = navigationConfig[lang];
+
+// 檢查當前路徑是否為活動狀態
+const isActive = (path: string) => {
+  if (path === '/memo/' && currentPath === '/memo/') return true;
+  if (path !== '/memo/' && currentPath.startsWith(path)) return true;
+  return false;
+};
+
+// 獲取對應的語言切換路徑
+const getLangSwitchPath = (targetLang: string) => {
+  const currentSection = currentPath.replace(`/memo/${lang}/`, '');
+  if (currentSection === '') return `/memo/${targetLang}/`;
+  return `/memo/${targetLang}/${currentSection}`;
+};
+---
+
+<nav class="navbar">
+  <div class="nav-container">
+    <a href="/memo/" class="nav-logo">ccc333bbb</a>
+    <div class="nav-links">
+      <a href={config.home.path} class={`nav-link ${isActive(config.home.path) ? 'active' : ''}`}>
+        {config.home.label}
+      </a>
+      <a href={config.blog.path} class={`nav-link ${isActive(config.blog.path) ? 'active' : ''}`}>
+        {config.blog.label}
+      </a>
+      <a href={config.thoughts.path} class={`nav-link ${isActive(config.thoughts.path) ? 'active' : ''}`}>
+        {config.thoughts.label}
+      </a>
+      <a href={config.projects.path} class={`nav-link ${isActive(config.projects.path) ? 'active' : ''}`}>
+        {config.projects.label}
+      </a>
+      <a href={config.bookmarks.path} class={`nav-link ${isActive(config.bookmarks.path) ? 'active' : ''}`}>
+        {config.bookmarks.label}
+      </a>
+      <a href={config.movieReview.path} class={`nav-link ${isActive(config.movieReview.path) ? 'active' : ''}`}>
+        {config.movieReview.label}
+      </a>
+      <div class="lang-switcher">
+        {Object.entries(config.langSwitcher).map(([targetLang, langConfig]) => (
+          <a 
+            href={getLangSwitchPath(targetLang)} 
+            class="lang-link"
+          >
+            {langConfig.label}
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+</nav>
+
+<style>
+  .navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  
+  .nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .nav-logo {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #2c3e50;
+    text-decoration: none;
+  }
+  
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+  }
+  
+  .nav-link {
+    color: #2c3e50;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
+  
+  .nav-link:hover,
+  .nav-link.active {
+    color: #3498db;
+  }
+  
+  .lang-switcher {
+    display: flex;
+    gap: 0.5rem;
+  }
+  
+  .lang-link {
+    padding: 0.5rem 1rem;
+    background: rgba(52, 152, 219, 0.1);
+    color: #3498db;
+    text-decoration: none;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+  }
+  
+  .lang-link:hover {
+    background: #3498db;
+    color: white;
+  }
+  
+  /* 響應式設計 */
+  @media (max-width: 768px) {
+    .nav-container {
+      padding: 1rem;
+    }
+    
+    .nav-links {
+      gap: 1rem;
+    }
+  }
+</style> 

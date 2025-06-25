@@ -1,27 +1,12 @@
 ---
 import Layout from '../../../layouts/Layout.astro';
+import Navigation from '../../../components/Navigation.astro';
 
 const posts = Object.values(import.meta.glob('./*.md', { eager: true }));
 ---
 
 <Layout title="觀影心得 - ccc333bbb" lang="tw">
-  <nav class="navbar">
-    <div class="nav-container">
-      <a href="/memo/" class="nav-logo">ccc333bbb</a>
-      <div class="nav-links">
-        <a href="/memo/tw/" class="nav-link">首頁</a>
-        <a href="/memo/tw/blog/" class="nav-link">部落格</a>
-        <a href="/memo/tw/thoughts/" class="nav-link">想法</a>
-        <a href="/memo/tw/projects/" class="nav-link">專案</a>
-        <a href="/memo/tw/bookmarks/" class="nav-link">書籤</a>
-        <a href="/memo/tw/movie-review/" class="nav-link active">觀影心得</a>
-        <div class="lang-switcher">
-          <a href="/memo/zh/movie-review/" class="lang-link">简中</a>
-          <a href="/memo/en/movie-review/" class="lang-link">English</a>
-        </div>
-      </div>
-    </div>
-  </nav>
+  <Navigation lang="tw" currentPath={Astro.url.pathname} />
 
   <!-- 主要內容 -->
   <main class="main-content">

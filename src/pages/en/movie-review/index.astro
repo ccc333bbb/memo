@@ -1,29 +1,13 @@
 ---
 import Layout from '../../../layouts/Layout.astro';
+import Navigation from '../../../components/Navigation.astro';
 
 // Get movie reviews
 const reviews = Object.values(import.meta.glob('./*.md', { eager: true }));
 ---
 
 <Layout title="Movie Reviews - ccc333bbb" lang="en">
-    <!-- Navigation bar -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="/memo/" class="nav-logo">ccc333bbb</a>
-            <div class="nav-links">
-                <a href="/memo/en/" class="nav-link">Home</a>
-                <a href="/memo/en/blog/" class="nav-link">Blog</a>
-                <a href="/memo/en/thoughts/" class="nav-link">Thoughts</a>
-                <a href="/memo/en/projects/" class="nav-link">Projects</a>
-                <a href="/memo/en/bookmarks/" class="nav-link">Bookmarks</a>
-                <a href="/memo/en/movie-review/" class="nav-link active">Movie Reviews</a>
-                <div class="lang-switcher">
-                    <a href="/memo/zh/movie-review/" class="lang-link">简中</a>
-                    <a href="/memo/tw/movie-review/" class="lang-link">繁中</a>
-                </div>
-            </div>
-        </div>
-    </nav>
+    <Navigation lang="en" currentPath={Astro.url.pathname} />
 
     <!-- Main content -->
     <main class="main-content">

@@ -1,29 +1,13 @@
 ---
 import Layout from '../../../layouts/Layout.astro';
+import Navigation from '../../../components/Navigation.astro';
 
 // 获取观影心得文章
 const reviews = Object.values(import.meta.glob('./*.md', { eager: true }));
 ---
 
 <Layout title="观影心得 - ccc333bbb" lang="zh">
-    <!-- 导航栏 -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="/memo/" class="nav-logo">ccc333bbb</a>
-            <div class="nav-links">
-                <a href="/memo/zh/" class="nav-link">首页</a>
-                <a href="/memo/zh/blog/" class="nav-link">博客</a>
-                <a href="/memo/zh/thoughts/" class="nav-link">想法</a>
-                <a href="/memo/zh/projects/" class="nav-link">项目</a>
-                <a href="/memo/zh/bookmarks/" class="nav-link">书签</a>
-                <a href="/memo/zh/movie-review/" class="nav-link active">观影心得</a>
-                <div class="lang-switcher">
-                    <a href="/memo/en/movie-review/" class="lang-link">EN</a>
-                    <a href="/memo/tw/movie-review/" class="lang-link">繁中</a>
-                </div>
-            </div>
-        </div>
-    </nav>
+    <Navigation lang="zh" currentPath={Astro.url.pathname} />
 
     <!-- 主要内容 -->
     <main class="main-content">
