@@ -10,27 +10,35 @@ const reviews = Object.values(import.meta.glob('./*.md', { eager: true })) as Co
 <Layout title="观影心得 - ccc333bbb" lang="zh">
     <Navigation lang="zh" currentPath={Astro.url.pathname} />
 
-    <!-- 主要内容 -->
     <main class="main-content">
         <div class="ink-bg ink-effect"></div>
-
         <div class="blog-container">
-            <h1 class="page-title">观影心得</h1>
-
-            <div class="reviews-list">
-                {reviews.map((review) => (
-                    <div class="review-card">
-                        <a href={review.url} class="review-link">
-                            <h2 class="review-title">{review.frontmatter.title}</h2>
-                            {review.frontmatter.date && (
-                                <p class="review-date">{review.frontmatter.date && new Date(review.frontmatter.date as string).toLocaleDateString('zh-CN')}</p>
-                            )}
-                            {review.frontmatter.description && (
-                                <p class="review-desc">{review.frontmatter.description}</p>
-                            )}
+            <header class="blog-header">
+                <h1>观影心得</h1>
+                <p>我的电影观后感与想法</p>
+            </header>
+            <div class="posts-grid">
+                {reviews.length > 0 ? reviews.map((review) => (
+                    <article class="post-card glass-effect">
+                        <a href={review.url} class="post-link">
+                            <h2 class="post-title">{review.frontmatter.title}</h2>
+                            <p class="post-description">{review.frontmatter.description}</p>
+                            <div class="post-meta">
+                                <time class="post-date">
+                                    {review.frontmatter.date && new Date(review.frontmatter.date as string).toLocaleDateString('zh-CN', {
+                                        year: 'numeric',
+                                        month: 'long',
+                                        day: 'numeric'
+                                    })}
+                                </time>
+                            </div>
                         </a>
+                    </article>
+                )) : (
+                    <div class="empty-state">
+                        <p>暂无观影心得，敬请期待！</p>
                     </div>
-                ))}
+                )}
             </div>
         </div>
     </main>
@@ -38,92 +46,94 @@ const reviews = Object.values(import.meta.glob('./*.md', { eager: true })) as Co
 
 <style>
     .main-content {
-        padding: 2rem;
         position: relative;
+        min-height: 100vh;
+        padding: 6rem 2rem 2rem;
     }
-
     .ink-bg {
-        position: absolute;
+        position: fixed;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
         z-index: -1;
     }
-
     .blog-container {
-        max-width: 900px;
+        max-width: 800px;
         margin: 0 auto;
     }
-
-    .page-title {
-        margin-bottom: 1rem;
+    .blog-header {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+    .blog-header h1 {
+        font-family: 'Noto Serif SC', serif;
         font-size: 2.5rem;
-        color: #333;
+        font-weight: 300;
+        color: #2c3e50;
+        margin-bottom: 0.5rem;
     }
-
-    .test-notice {
-        background-color: #fff8e6;
-        border-left: 4px solid #ffcc00;
-        padding: 0.8rem 1rem;
-        margin-bottom: 2rem;
-        border-radius: 4px;
+    .blog-header p {
+        color: #7f8c8d;
+        font-size: 1.1rem;
     }
-
-    .test-notice p {
-        margin: 0;
-        color: #735c00;
-    }
-
-    .reviews-list {
+    .posts-grid {
         display: grid;
-        gap: 1.5rem;
+        gap: 2rem;
     }
-
-    .review-card {
-        border: 1px solid #eee;
-        border-radius: 8px;
-        padding: 1.5rem;
-        transition: transform 0.2s, box-shadow 0.2s;
-        position: relative;
+    .post-card {
+        border-radius: 20px;
+        padding: 2rem;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
     }
-
-    .review-card:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+    .post-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 25px 45px rgba(0,0,0,0.15);
     }
-
-    .review-link {
+    .post-link {
+        display: block;
         text-decoration: none;
         color: inherit;
     }
-
-    .review-title {
-        margin: 0 0 0.5rem;
+    .post-title {
+        font-family: 'Noto Serif SC', serif;
         font-size: 1.5rem;
-        color: #222;
+        font-weight: 500;
+        color: #2c3e50;
+        margin-bottom: 1rem;
     }
-
-    .test-badge {
-        display: inline-block;
-        background-color: #e6f7ff;
-        color: #0066cc;
-        font-size: 0.7rem;
-        padding: 0.2rem 0.5rem;
-        border-radius: 4px;
-        font-weight: 600;
-        margin-bottom: 0.5rem;
+    .post-description {
+        color: #7f8c8d;
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
     }
-
-    .review-date {
+    .post-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+    .post-date {
+        color: #95a5a6;
         font-size: 0.9rem;
-        color: #666;
-        margin: 0.5rem 0;
     }
-
-    .review-desc {
-        margin-top: 0.5rem;
-        color: #444;
-        line-height: 1.5;
+    .empty-state {
+        text-align: center;
+        padding: 3rem;
+        color: #7f8c8d;
+    }
+    @media (max-width: 768px) {
+        .main-content {
+            padding: 5rem 1rem 2rem;
+        }
+        .blog-header h1 {
+            font-size: 2rem;
+        }
+        .post-meta {
+            flex-direction: column;
+            align-items: flex-start;
+        }
     }
 </style>
