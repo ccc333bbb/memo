@@ -1,9 +1,10 @@
 ---
 import Layout from '../../../layouts/Layout.astro';
+import type { ContentEntry } from '../../../types/content';
 import Navigation from '../../../components/Navigation.astro';
 
 // 获取观影心得文章
-const reviews = Object.values(import.meta.glob('./*.md', { eager: true }));
+const reviews = Object.values(import.meta.glob('./*.md', { eager: true })) as ContentEntry[];
 ---
 
 <Layout title="观影心得 - ccc333bbb" lang="zh">
@@ -22,7 +23,7 @@ const reviews = Object.values(import.meta.glob('./*.md', { eager: true }));
                         <a href={review.url} class="review-link">
                             <h2 class="review-title">{review.frontmatter.title}</h2>
                             {review.frontmatter.date && (
-                                <p class="review-date">{new Date(review.frontmatter.date).toLocaleDateString('zh-CN')}</p>
+                                <p class="review-date">{review.frontmatter.date && new Date(review.frontmatter.date as string).toLocaleDateString('zh-CN')}</p>
                             )}
                             {review.frontmatter.description && (
                                 <p class="review-desc">{review.frontmatter.description}</p>

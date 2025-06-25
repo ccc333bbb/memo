@@ -1,8 +1,9 @@
 ---
 import Layout from '../../../layouts/Layout.astro';
+import type { ContentEntry } from '../../../types/content';
 import Navigation from '../../../components/Navigation.astro';
 
-const posts = Object.values(import.meta.glob('./*.md', { eager: true }));
+const posts = Object.values(import.meta.glob('./*.md', { eager: true })) as ContentEntry[];
 ---
 
 <Layout title="想法 - ccc333bbb" lang="zh">
@@ -25,7 +26,7 @@ const posts = Object.values(import.meta.glob('./*.md', { eager: true }));
                             <p class="post-description">{post.frontmatter.description}</p>
                             <div class="post-meta">
                                 <time class="post-date">
-                                    {new Date(post.frontmatter.pubDate).toLocaleDateString('zh-CN', {
+                                    {post.frontmatter.pubDate && new Date(post.frontmatter.pubDate as string).toLocaleDateString('zh-CN', {
                                         year: 'numeric',
                                         month: 'long',
                                         day: 'numeric'

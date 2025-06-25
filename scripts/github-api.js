@@ -123,7 +123,7 @@ class GitHubAPI {
    */
   async searchBlogIssues(query = 'label:blog-post') {
     try {
-      const response = await this.octokit.search.issuesAndPullRequests({
+      const response = await this.octokit.search.issues({
         q: `${query} is:issue repo:${this.owner}/${this.repo}`,
         sort: 'created',
         order: 'desc',

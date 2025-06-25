@@ -1,8 +1,9 @@
 ---
 import Layout from '../../../layouts/Layout.astro';
+import type { ContentEntry } from '../../../types/content';
 import Navigation from '../../../components/Navigation.astro';
 
-const posts = Object.values(import.meta.glob('./*.md', { eager: true }));
+const reviews = Object.values(import.meta.glob('./*.md', { eager: true })) as ContentEntry[];
 ---
 
 <Layout title="觀影心得 - ccc333bbb" lang="tw">
@@ -16,15 +17,15 @@ const posts = Object.values(import.meta.glob('./*.md', { eager: true }));
       <h1 class="page-title">觀影心得</h1>
 
       <div class="reviews-list">
-        {posts.map((post) => (
+        {reviews.map((review) => (
           <div class="review-card">
-            <a href={post.url} class="review-link">
-              <h2 class="review-title">{post.frontmatter.title}</h2>
-              {post.frontmatter.date && (
-                <p class="review-date">{new Date(post.frontmatter.date).toLocaleDateString('zh-TW')}</p>
+            <a href={review.url} class="review-link">
+              <h2 class="review-title">{review.frontmatter.title}</h2>
+              {review.frontmatter.date && (
+                <p class="review-date">{review.frontmatter.date && new Date(review.frontmatter.date as string).toLocaleDateString('zh-TW')}</p>
               )}
-              {post.frontmatter.description && (
-                <p class="review-desc">{post.frontmatter.description}</p>
+              {review.frontmatter.description && (
+                <p class="review-desc">{review.frontmatter.description}</p>
               )}
             </a>
           </div>

@@ -1,9 +1,10 @@
 ---
 import Layout from '../../../layouts/Layout.astro';
+import type { ContentEntry } from '../../../types/content';
 import Navigation from '../../../components/Navigation.astro';
 
 // 獲取部落格文章
-const posts = Object.values(import.meta.glob('./*.md', { eager: true }));
+const posts = Object.values(import.meta.glob('./*.md', { eager: true })) as ContentEntry[];
 ---
 
 <Layout title="部落格 - ccc333bbb" lang="zh-TW">
@@ -27,7 +28,7 @@ const posts = Object.values(import.meta.glob('./*.md', { eager: true }));
                             <p class="post-description">{post.frontmatter.description}</p>
                             <div class="post-meta">
                                 <time class="post-date">
-                                    {new Date(post.frontmatter.pubDate).toLocaleDateString('zh-TW', {
+                                    {post.frontmatter.pubDate && new Date(post.frontmatter.pubDate as string).toLocaleDateString('zh-TW', {
                                         year: 'numeric',
                                         month: 'long',
                                         day: 'numeric'

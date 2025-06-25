@@ -277,13 +277,15 @@
     <script>
         let countdown = 3;
         const countdownEl = document.getElementById('countdown');
-        const autoRedirectEl = document.querySelector('.auto-redirect');
-        const stayBtn = document.getElementById('stay');
+        const autoRedirectEl = document.querySelector('.auto-redirect') as HTMLElement;
+        const stayBtn = document.getElementById('stay') as HTMLButtonElement;
         
         // 倒計時
         const timer = setInterval(() => {
             countdown--;
-            countdownEl.textContent = countdown;
+            if (countdownEl) {
+                countdownEl.textContent = countdown.toString();
+            }
             
             if (countdown <= 0) {
                 window.location.href = '/memo/en/';
@@ -291,10 +293,14 @@
         }, 1000);
         
         // 停留按鈕
-        stayBtn.addEventListener('click', () => {
-            clearInterval(timer);
-            autoRedirectEl.style.display = 'none';
-        });
+        if (stayBtn) {
+            stayBtn.addEventListener('click', () => {
+                clearInterval(timer);
+                if (autoRedirectEl) {
+                    autoRedirectEl.style.display = 'none';
+                }
+            });
+        }
     </script>
 </body>
 </html>
