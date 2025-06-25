@@ -15,3 +15,9 @@ tags: ["元思考", "开始", "反思"]
 想法的美在于它们的简洁。它们不需要精细的结构或广泛的研究。只是用文字捕捉的一个清晰瞬间。
 
 *你今天会想些什么呢？*
+
+---
+
+import GiscusComments from '../../../components/GiscusComments.astro';
+
+<GiscusComments />

@@ -126,17 +126,103 @@ class GitHubAPI {
    */
   async searchBlogIssues(query = 'label:blog-post') {
     try {
-      const response = await this.octokit.search.issues({
+      const response = await this.octokit.search.issuesAndPullRequests({
         q: `${query} is:issue repo:${this.owner}/${this.repo}`,
         sort: 'created',
         order: 'desc',
       });
-      
       return response.data.items;
     } catch (error) {
       console.error('❌ 搜索 Issues 失敗:', error.message);
       throw error;
     }
+  }
+
+  /**
+   * 獲取 issue 的評論
+   * @param {number} issueNumber - Issue 編號
+   * @returns {Promise<Array>} 評論列表
+   */
+  async getIssueComments(issueNumber) {
+    try {
+      const response = await this.octokit.issues.listComments({
+        owner: this.owner,
+        repo: this.repo,
+        issue_number: issueNumber,
+        per_page: 100,
+      });
+      
+      return response.data;
+    } catch (error) {
+      console.error(`❌ 獲取 Issue #${issueNumber} 評論失敗:`, error.message);
+      throw error;
+    }
+  }
+
+  /**
+   * 為 issue 添加評論
+   * @param {number} issueNumber - Issue 編號
+   * @param {string} comment - 評論內容
+   * @returns {Promise<Object>} 創建的評論
+   */
+  async addComment(issueNumber, comment) {
+    try {
+      const response = await this.octokit.issues.createComment({
+        owner: this.owner,
+        repo: this.repo,
+        issue_number: issueNumber,
+        body: comment,
+      });
+      
+      console.log(`✅ 成功為 Issue #${issueNumber} 添加評論`);
+      return response.data;
+    } catch (error) {
+      console.error(`❌ 為 Issue #${issueNumber} 添加評論失敗:`, error.message);
+      throw error;
+    }
+  }
+
+  /**
+   * 根據文章標題搜索對應的 issue
+   * @param {string} title - 文章標題
+   * @returns {Promise<Object|null>} 找到的 issue 或 null
+   */
+  async findIssueByTitle(title) {
+    try {
+      const response = await this.octokit.search.issuesAndPullRequests({
+        q: `"${title}" is:issue repo:${this.owner}/${this.repo}`,
+        sort: 'created',
+        order: 'desc',
+      });
+      return response.data.items.length > 0 ? response.data.items[0] : null;
+    } catch (error) {
+      console.error('❌ 搜索 Issue 失敗:', error.message);
+      throw error;
+    }
+  }
+
+  /**
+   * 為文章創建評論 issue
+   * @param {string} title - 文章標題
+   * @param {string} url - 文章 URL
+   * @param {string} description - 文章描述
+   * @returns {Promise<Object>} 創建的 issue
+   */
+  async createCommentIssue(title, url, description = '') {
+    const body = `# ${title}
+
+${description}
+
+---
+**文章鏈接**: ${url}
+
+歡迎在下方發表評論和討論！`;
+    
+    return await this.createIssue(
+      `💬 ${title}`,
+      body,
+      ['comments', 'blog-post']
+    );
   }
 }
 

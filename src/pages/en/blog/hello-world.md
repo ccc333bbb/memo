@@ -41,3 +41,9 @@ Thank you for visiting, and I hope you find something useful here!
 ---
 
 *This post marks the beginning of my journey sharing knowledge and experiences through this platform.*
+
+---
+
+import GiscusComments from '../../../components/GiscusComments.astro';
+
+<GiscusComments />

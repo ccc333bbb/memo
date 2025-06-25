@@ -9,7 +9,9 @@
     "astro": "astro",
     "blog:create": "node scripts/create-blog.js",
     "blog:publish": "node scripts/publish-blog.js",
-    "blog:list": "node scripts/list-blogs.js"
+    "blog:list": "node scripts/list-blogs.js",
+    "comments:create": "node scripts/create-comment-issues.js",
+    "comments:test": "node scripts/test-comments.js"
   },
   "dependencies": {
     "@octokit/rest": "^21.0.2",

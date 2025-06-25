@@ -41,3 +41,9 @@ status: published
 ---
 
 *这篇文章标志着我通过这个平台分享知识和经验的旅程开始。*
+
+---
+
+import GiscusComments from '../../../components/GiscusComments.astro';
+
+<GiscusComments />

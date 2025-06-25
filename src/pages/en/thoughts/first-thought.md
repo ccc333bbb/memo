@@ -15,3 +15,9 @@ Sometimes the most profound insights come in the form of simple thoughts. This i
 The beauty of thoughts is their brevity. They don't need elaborate structure or extensive research. Just a moment of clarity captured in words.
 
 *What will you think about today?*
+
+---
+
+import GiscusComments from '../../../components/GiscusComments.astro';
+
+<GiscusComments />

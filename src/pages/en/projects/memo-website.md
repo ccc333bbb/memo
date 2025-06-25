@@ -49,3 +49,9 @@ This project serves as my personal knowledge hub where I collect and organize th
 - Implement advanced content management features
 
 This project represents my commitment to building accessible, multilingual web experiences with modern development practices.
+
+---
+
+import GiscusComments from '../../../components/GiscusComments.astro';
+
+<GiscusComments />
