@@ -1,31 +1,31 @@
 ---
 export interface Props {
-  repo: string;
-  repoId: string;
-  category: string;
-  categoryId: string;
+  repo?: string;
+  repoId?: string;
+  category?: string;
+  categoryId?: string;
   mapping?: string;
   strict?: boolean;
   reactionsEnabled?: boolean;
   emitMetadata?: boolean;
   inputPosition?: 'top' | 'bottom';
-  theme?: 'light' | 'dark' | 'preferred_color_scheme';
+  theme?: 'light' | 'dark' | 'preferred_color_scheme' | 'purple_dark';
   lang?: string;
   loading?: 'lazy' | 'eager';
 }
 
 const {
   repo = "ccc333bbb/memo",
-  repoId = "R_kgDOLqQAAA",
+  repoId = "R_kgDOO6akLA",
   category = "Announcements",
-  categoryId = "DIC_kwDOLqQAAM4CbqQAAA",
+  categoryId = "DIC_kwDOO6akLM4Cr_hK",
   mapping = "pathname",
   strict = false,
   reactionsEnabled = true,
   emitMetadata = false,
   inputPosition = "bottom",
-  theme = "preferred_color_scheme",
-  lang = "zh-TW",
+  theme = "purple_dark",
+  lang = "en",
   loading = "lazy"
 } = Astro.props;
 ---
@@ -38,18 +38,19 @@ const {
   const giscusScript = document.createElement('script');
   giscusScript.src = 'https://giscus.app/client.js';
   giscusScript.setAttribute('data-repo', 'ccc333bbb/memo');
-  giscusScript.setAttribute('data-repo-id', 'R_kgDOLqQAAA');
+  giscusScript.setAttribute('data-repo-id', 'R_kgDOO6akLA');
   giscusScript.setAttribute('data-category', 'Announcements');
-  giscusScript.setAttribute('data-category-id', 'DIC_kwDOLqQAAM4CbqQAAA');
+  giscusScript.setAttribute('data-category-id', 'DIC_kwDOO6akLM4Cr_hK');
   giscusScript.setAttribute('data-mapping', 'pathname');
-  giscusScript.setAttribute('data-strict', 'false');
-  giscusScript.setAttribute('data-reactions-enabled', 'true');
-  giscusScript.setAttribute('data-emit-metadata', 'false');
+  giscusScript.setAttribute('data-strict', '0');
+  giscusScript.setAttribute('data-reactions-enabled', '1');
+  giscusScript.setAttribute('data-emit-metadata', '0');
   giscusScript.setAttribute('data-input-position', 'bottom');
-  giscusScript.setAttribute('data-theme', 'preferred_color_scheme');
-  giscusScript.setAttribute('data-lang', 'zh-TW');
+  giscusScript.setAttribute('data-theme', 'purple_dark');
+  giscusScript.setAttribute('data-lang', 'en');
   giscusScript.setAttribute('data-loading', 'lazy');
   giscusScript.crossOrigin = 'anonymous';
+  giscusScript.async = true;
   
   document.getElementById('giscus')?.appendChild(giscusScript);
 </script>
