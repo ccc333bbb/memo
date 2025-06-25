@@ -1,0 +1,331 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+
+const posts = Object.values(import.meta.glob('./*.md', { eager: true }));
+---
+
+<Layout title="專案 - ccc333bbb" lang="tw">
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/memo/" class="nav-logo">ccc333bbb</a>
+            <div class="nav-links">
+                <a href="/memo/tw/" class="nav-link">首頁</a>
+                <a href="/memo/tw/blog/" class="nav-link">部落格</a>
+                <a href="/memo/tw/thoughts/" class="nav-link">想法</a>
+                <a href="/memo/tw/projects/" class="nav-link active">專案</a>
+                <a href="/memo/tw/bookmarks/" class="nav-link">書籤</a>
+                <div class="lang-switcher">
+                    <a href="/memo/en/projects/" class="lang-link">EN</a>
+                    <a href="/memo/zh/projects/" class="lang-link">简中</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="ink-bg ink-effect"></div>
+        
+        <div class="blog-container">
+            <header class="blog-header">
+                <h1>專案 🚀</h1>
+                <p>我的作品與創作展示</p>
+            </header>
+            
+            <div class="posts-grid">
+                {posts.length > 0 ? posts.map((post) => (
+                    <article class="post-card glass-effect">
+                        <a href={post.url} class="post-link">
+                            <div class="project-header">
+                                <h2 class="post-title">{post.frontmatter.title}</h2>
+                                {post.frontmatter.projectStatus && (
+                                    <span class={`project-status ${post.frontmatter.projectStatus}`}>
+                                        {post.frontmatter.projectStatus === 'completed' ? '✅ 已完成' :
+                                         post.frontmatter.projectStatus === 'in-progress' ? '🔨 進行中' :
+                                         post.frontmatter.projectStatus === 'archived' ? '📦 已封存' : post.frontmatter.projectStatus}
+                                    </span>
+                                )}
+                            </div>
+                            <p class="post-description">{post.frontmatter.description}</p>
+                            {post.frontmatter.techStack && (
+                                <div class="tech-stack">
+                                    {post.frontmatter.techStack.map((tech) => (
+                                        <span class="tech-tag">{tech}</span>
+                                    ))}
+                                </div>
+                            )}
+                            <div class="post-meta">
+                                <time class="post-date">
+                                    {new Date(post.frontmatter.pubDate).toLocaleDateString('zh-TW', {
+                                        year: 'numeric',
+                                        month: 'long',
+                                        day: 'numeric'
+                                    })}
+                                </time>
+                                <div class="project-links">
+                                    {post.frontmatter.sourceUrl && (
+                                        <span class="project-link-item">📂 原始碼</span>
+                                    )}
+                                    {post.frontmatter.demoUrl && (
+                                        <span class="project-link-item">🔗 展示</span>
+                                    )}
+                                </div>
+                            </div>
+                        </a>
+                    </article>
+                )) : (
+                    <div class="empty-state">
+                        <p>尚無專案，請稍後回來查看！</p>
+                    </div>
+                )}
+            </div>
+        </div>
+    </main>
+</Layout>
+
+<style>
+    .navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 100;
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+    
+    .nav-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .nav-logo {
+        font-family: 'Noto Serif SC', serif;
+        font-size: 1.5rem;
+        font-weight: 500;
+        color: #2c3e50;
+        text-decoration: none;
+    }
+    
+    .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+    }
+    
+    .nav-link {
+        color: #2c3e50;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s ease;
+    }
+    
+    .nav-link:hover,
+    .nav-link.active {
+        color: #3498db;
+    }
+    
+    .lang-switcher {
+        display: flex;
+        gap: 0.5rem;
+    }
+    
+    .lang-link {
+        padding: 0.5rem 1rem;
+        background: rgba(52, 152, 219, 0.1);
+        color: #3498db;
+        text-decoration: none;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+    }
+    
+    .lang-link:hover {
+        background: #3498db;
+        color: white;
+    }
+    
+    .main-content {
+        position: relative;
+        min-height: 100vh;
+        padding: 6rem 2rem 2rem;
+    }
+    
+    .ink-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+    }
+    
+    .blog-container {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    
+    .blog-header {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+    
+    .blog-header h1 {
+        font-family: 'Noto Serif SC', serif;
+        font-size: 2.5rem;
+        font-weight: 300;
+        color: #2c3e50;
+        margin-bottom: 0.5rem;
+    }
+    
+    .blog-header p {
+        color: #7f8c8d;
+        font-size: 1.1rem;
+    }
+    
+    .posts-grid {
+        display: grid;
+        gap: 2rem;
+    }
+    
+    .post-card {
+        border-radius: 20px;
+        padding: 2rem;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+    }
+    
+    .post-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 25px 45px rgba(0,0,0,0.15);
+    }
+    
+    .post-link {
+        display: block;
+        text-decoration: none;
+        color: inherit;
+    }
+    
+    .project-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 1rem;
+        gap: 1rem;
+    }
+    
+    .post-title {
+        font-family: 'Noto Serif SC', serif;
+        font-size: 1.5rem;
+        font-weight: 500;
+        color: #2c3e50;
+        line-height: 1.3;
+        margin: 0;
+    }
+    
+    .project-status {
+        padding: 0.3rem 0.8rem;
+        border-radius: 15px;
+        font-size: 0.8rem;
+        font-weight: 500;
+        white-space: nowrap;
+    }
+    
+    .project-status.completed {
+        background: rgba(46, 204, 113, 0.1);
+        color: #27ae60;
+    }
+    
+    .project-status.in-progress {
+        background: rgba(241, 196, 15, 0.1);
+        color: #f39c12;
+    }
+    
+    .project-status.archived {
+        background: rgba(149, 165, 166, 0.1);
+        color: #7f8c8d;
+    }
+    
+    .post-description {
+        color: #7f8c8d;
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+    }
+    
+    .tech-stack {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        margin-bottom: 1.5rem;
+    }
+    
+    .tech-tag {
+        background: rgba(155, 89, 182, 0.1);
+        color: #9b59b6;
+        padding: 0.3rem 0.8rem;
+        border-radius: 15px;
+        font-size: 0.8rem;
+        font-weight: 500;
+    }
+    
+    .post-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+    
+    .post-date {
+        color: #95a5a6;
+        font-size: 0.9rem;
+    }
+    
+    .project-links {
+        display: flex;
+        gap: 1rem;
+    }
+    
+    .project-link-item {
+        color: #3498db;
+        font-size: 0.9rem;
+    }
+    
+    .empty-state {
+        text-align: center;
+        padding: 3rem;
+        color: #7f8c8d;
+    }
+    
+    @media (max-width: 768px) {
+        .nav-container {
+            padding: 1rem;
+        }
+        
+        .nav-links {
+            gap: 1rem;
+        }
+        
+        .main-content {
+            padding: 5rem 1rem 2rem;
+        }
+        
+        .blog-header h1 {
+            font-size: 2rem;
+        }
+        
+        .project-header {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        
+        .post-meta {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+    }
+</style>
