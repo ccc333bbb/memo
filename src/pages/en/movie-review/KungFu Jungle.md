@@ -2,7 +2,10 @@
 title: Kung Fu Jungle
 Director: Teddy Chan
 Starring: Donnie Yen, Wang Baoqiang
+testPost: true
 ---
+
+> **Note:** This is a test article and not a real user review.
 
 "Kung Fu Jungle" tells the story of a martial arts master searching for a true opponent in the city.
 

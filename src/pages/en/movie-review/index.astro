@@ -1,12 +1,120 @@
 ---
 import Layout from '../../../layouts/Layout.astro';
 
-const { title } = Astro.props;
+// Get movie reviews
+const reviews = Object.values(import.meta.glob('./*.md', { eager: true }));
 ---
 
-<Layout title={title}>
-  <main class="container">
-    <h1>{title}</h1>
-    <!-- Movie reviews content will be listed here -->
-  </main>
+<Layout title="Movie Reviews - ccc333bbb" lang="en">
+    <!-- Navigation bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/memo/" class="nav-logo">ccc333bbb</a>
+            <div class="nav-links">
+                <a href="/memo/en/" class="nav-link">Home</a>
+                <a href="/memo/en/blog/" class="nav-link">Blog</a>
+                <a href="/memo/en/thoughts/" class="nav-link">Thoughts</a>
+                <a href="/memo/en/projects/" class="nav-link">Projects</a>
+                <a href="/memo/en/bookmarks/" class="nav-link">Bookmarks</a>
+                <a href="/memo/en/movie-review/" class="nav-link active">Movie Reviews</a>
+                <div class="lang-switcher">
+                    <a href="/memo/zh/movie-review/" class="lang-link">简中</a>
+                    <a href="/memo/tw/movie-review/" class="lang-link">繁中</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main content -->
+    <main class="main-content">
+        <div class="ink-bg ink-effect"></div>
+
+        <div class="blog-container">
+            <h1 class="page-title">Movie Reviews</h1>
+
+            <div class="reviews-list">
+                {reviews.map((review) => (
+                    <div class="review-card">
+                        <a href={review.url} class="review-link">
+                            <h2 class="review-title">{review.frontmatter.title}</h2>
+                            {review.frontmatter.date && (
+                                <p class="review-date">{new Date(review.frontmatter.date).toLocaleDateString('en-US')}</p>
+                            )}
+                            {review.frontmatter.description && (
+                                <p class="review-desc">{review.frontmatter.description}</p>
+                            )}
+                        </a>
+                    </div>
+                ))}
+            </div>
+        </div>
+    </main>
 </Layout>
+
+<style>
+    .main-content {
+        padding: 2rem;
+        position: relative;
+    }
+
+    .ink-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+    }
+
+    .blog-container {
+        max-width: 900px;
+        margin: 0 auto;
+    }
+
+    .page-title {
+        margin-bottom: 1rem;
+        font-size: 2.5rem;
+        color: #333;
+    }
+
+    .reviews-list {
+        display: grid;
+        gap: 1.5rem;
+    }
+
+    .review-card {
+        border: 1px solid #eee;
+        border-radius: 8px;
+        padding: 1.5rem;
+        transition: transform 0.2s, box-shadow 0.2s;
+        position: relative;
+    }
+
+    .review-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+    }
+
+    .review-link {
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .review-title {
+        margin: 0 0 0.5rem;
+        font-size: 1.5rem;
+        color: #222;
+    }
+
+    .review-date {
+        font-size: 0.9rem;
+        color: #666;
+        margin: 0.5rem 0;
+    }
+
+    .review-desc {
+        margin-top: 0.5rem;
+        color: #444;
+        line-height: 1.5;
+    }
+</style>
