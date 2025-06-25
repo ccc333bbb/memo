@@ -1,7 +1,10 @@
 import { Octokit } from '@octokit/rest';
 import dotenv from 'dotenv';
 
-dotenv.config();
+// 只在非生產環境載入 .env 文件
+if (process.env.NODE_ENV !== 'production') {
+  dotenv.config();
+}
 
 class GitHubAPI {
   constructor() {
