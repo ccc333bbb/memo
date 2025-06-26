@@ -1,4 +1,5 @@
 ---
+layout: ../../../layouts/BlogLayout.astro
 title: First Thought
 pubDate: 2024-06-24
 description: A brief reflection on starting this thoughts collection

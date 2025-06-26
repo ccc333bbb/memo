@@ -1,12 +1,13 @@
 ---
+layout: ../../../layouts/BlogLayout.astro
 title: Web Development Resources
 pubDate: 2024-06-24
-description: Curated collection of essential web development tools and resources
+description: Essential resources and tools for modern web development
 author: ccc333bbb
 language: en
 status: published
 category: "development"
-tags: ["web-development", "tools", "resources", "frontend", "backend"]
+tags: ["web", "development", "frontend", "backend", "tools"]
 ---
 
 # Web Development Resources 🔖

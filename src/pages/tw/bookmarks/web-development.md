@@ -1,12 +1,13 @@
 ---
+layout: ../../../layouts/BlogLayout.astro
 title: 網頁開發資源
 pubDate: 2024-06-24
-description: 精選的網頁開發工具和資源集合
+description: 現代網頁開發的必備資源和工具
 author: ccc333bbb
 language: tw
 status: published
 category: "development"
-tags: ["網頁開發", "工具", "資源", "前端", "後端"]
+tags: ["web", "development", "frontend", "backend", "tools"]
 ---
 
 # 網頁開發資源 🔖

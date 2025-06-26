@@ -1,0 +1,241 @@
+---
+export interface Props {
+  lang: 'en' | 'zh' | 'tw';
+  currentPath: string;
+  title?: string;
+}
+
+const { lang, currentPath, title } = Astro.props;
+
+// 麵包屑配置
+const breadcrumbConfig = {
+  en: {
+    home: 'Home',
+    blog: 'Blog',
+    thoughts: 'Thoughts',
+    projects: 'Projects',
+    bookmarks: 'Bookmarks',
+    movieReview: 'Movie Reviews',
+    back: '← Back'
+  },
+  zh: {
+    home: '首页',
+    blog: '博客',
+    thoughts: '想法',
+    projects: '项目',
+    bookmarks: '书签',
+    movieReview: '观影心得',
+    back: '← 返回'
+  },
+  tw: {
+    home: '首頁',
+    blog: '部落格',
+    thoughts: '想法',
+    projects: '專案',
+    bookmarks: '書籤',
+    movieReview: '觀影心得',
+    back: '← 返回'
+  }
+};
+
+const config = breadcrumbConfig[lang];
+
+// 生成麵包屑路徑
+const generateBreadcrumbs = () => {
+  const breadcrumbs = [];
+  
+  // 添加首頁
+  breadcrumbs.push({
+    label: config.home,
+    path: `/memo/${lang}/`,
+    isActive: currentPath === `/memo/${lang}/`
+  });
+  
+  // 解析當前路徑
+  const pathSegments = currentPath.replace(`/memo/${lang}/`, '').split('/').filter(Boolean);
+  
+  if (pathSegments.length > 0) {
+    const section = pathSegments[0];
+    let sectionLabel = '';
+    let sectionPath = '';
+    
+    // 根據路徑段確定章節標籤和路徑
+    switch (section) {
+      case 'blog':
+        sectionLabel = config.blog;
+        sectionPath = `/memo/${lang}/blog/`;
+        break;
+      case 'thoughts':
+        sectionLabel = config.thoughts;
+        sectionPath = `/memo/${lang}/thoughts/`;
+        break;
+      case 'projects':
+        sectionLabel = config.projects;
+        sectionPath = `/memo/${lang}/projects/`;
+        break;
+      case 'bookmarks':
+        sectionLabel = config.bookmarks;
+        sectionPath = `/memo/${lang}/bookmarks/`;
+        break;
+      case 'movie-review':
+        sectionLabel = config.movieReview;
+        sectionPath = `/memo/${lang}/movie-review/`;
+        break;
+    }
+    
+    if (sectionLabel) {
+      breadcrumbs.push({
+        label: sectionLabel,
+        path: sectionPath,
+        isActive: currentPath === sectionPath
+      });
+      
+      // 如果有文章標題，添加為最後一級
+      if (pathSegments.length > 1 && title) {
+        breadcrumbs.push({
+          label: title,
+          path: currentPath,
+          isActive: true
+        });
+      }
+    }
+  }
+  
+  return breadcrumbs;
+};
+
+const breadcrumbs = generateBreadcrumbs();
+const showBreadcrumb = breadcrumbs.length > 1; // 只有當有多於一個麵包屑時才顯示
+---
+
+{showBreadcrumb && (
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <div class="breadcrumb-container">
+      <ol class="breadcrumb-list">
+        {breadcrumbs.map((crumb, index) => (
+          <li class="breadcrumb-item">
+            {index === breadcrumbs.length - 1 ? (
+              <span class="breadcrumb-current" aria-current="page">
+                {crumb.label}
+              </span>
+            ) : (
+              <a href={crumb.path} class="breadcrumb-link">
+                {crumb.label}
+              </a>
+            )}
+            {index < breadcrumbs.length - 1 && (
+              <span class="breadcrumb-separator">/</span>
+            )}
+          </li>
+        ))}
+      </ol>
+      
+      {/* 返回按鈕 */}
+      {breadcrumbs.length > 2 && (
+        <a href={breadcrumbs[breadcrumbs.length - 2].path} class="back-button">
+          {config.back}
+        </a>
+      )}
+    </div>
+  </nav>
+)}
+
+<style>
+  .breadcrumb {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 0.75rem 0;
+    margin-bottom: 1rem;
+    position: sticky;
+    top: 80px; /* 導航欄高度 + 一些間距 */
+    z-index: 99;
+  }
+  
+  .breadcrumb-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .breadcrumb-list {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 0.5rem;
+  }
+  
+  .breadcrumb-item {
+    display: flex;
+    align-items: center;
+  }
+  
+  .breadcrumb-link {
+    color: #3498db;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
+  
+  .breadcrumb-link:hover {
+    color: #2980b9;
+    text-decoration: underline;
+  }
+  
+  .breadcrumb-current {
+    color: #2c3e50;
+    font-weight: 600;
+  }
+  
+  .breadcrumb-separator {
+    color: #95a5a6;
+    margin: 0 0.5rem;
+    font-weight: 300;
+  }
+  
+  .back-button {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    background: rgba(52, 152, 219, 0.1);
+    color: #3498db;
+    text-decoration: none;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+  }
+  
+  .back-button:hover {
+    background: #3498db;
+    color: white;
+    transform: translateX(-2px);
+  }
+  
+  /* 響應式設計 */
+  @media (max-width: 768px) {
+    .breadcrumb {
+      top: 70px; /* 移動端導航欄可能更小 */
+    }
+    
+    .breadcrumb-container {
+      padding: 0 1rem;
+      flex-direction: column;
+      gap: 0.5rem;
+      align-items: flex-start;
+    }
+    
+    .breadcrumb-list {
+      flex-wrap: wrap;
+    }
+    
+    .back-button {
+      align-self: flex-end;
+    }
+  }
+</style> 

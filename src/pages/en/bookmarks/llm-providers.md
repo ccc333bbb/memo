@@ -1,4 +1,5 @@
 ---
+layout: ../../../layouts/BlogLayout.astro
 title: Popular LLM Providers
 pubDate: 2024-06-24
 description: Comprehensive collection of leading AI language model providers and platforms

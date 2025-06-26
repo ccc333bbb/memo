@@ -1,12 +1,13 @@
 ---
-title: 熱門 LLM 服務商
+layout: ../../../layouts/BlogLayout.astro
+title: 熱門 LLM 提供商
 pubDate: 2024-06-24
-description: 領先AI語言模型提供商和平台的綜合收集
+description: 領先的 AI 語言模型提供商和平台的綜合集合
 author: ccc333bbb
 language: tw
 status: published
 category: "tools"
-tags: ["AI", "LLM", "服務商", "API", "人工智慧"]
+tags: ["AI", "LLM", "providers", "API", "artificial-intelligence"]
 ---
 
 # 熱門 LLM 服務商 🤖

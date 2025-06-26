@@ -1,4 +1,5 @@
 ---
+layout: ../../../layouts/BlogLayout.astro
 title: Git 多平台備份策略 - 確保程式碼安全的完整指南
 pubDate: 2024-12-01
 description: 詳細介紹如何將公開 Git 倉庫同步到多個免費雲端平台，實現可靠的程式碼備份策略。

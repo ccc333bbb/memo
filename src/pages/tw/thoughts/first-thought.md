@@ -1,23 +1,18 @@
 ---
+layout: ../../../layouts/BlogLayout.astro
 title: 第一個想法
 pubDate: 2024-06-24
-description: 關於開始這個想法收集的簡短反思
+description: 關於開始這個想法集合的簡短反思
 author: ccc333bbb
 language: tw
 status: published
-tags: ["元思考", "開始", "反思"]
+tags: ["meta", "beginning", "reflection"]
 ---
 
 # 第一個想法 💭
 
-有時候最深刻的洞察以簡單的想法形式出現。這是我在想法區塊的第一篇文章 - 一個用於快速反思、觀察和微洞察的空間。
+有時最深刻的見解來自簡單的想法。這是我在想法專區的第一篇記錄 - 一個用於快速反思、觀察和微觀見解的空間。
 
-想法的美在於它們的簡潔。它們不需要精細的結構或廣泛的研究。只是用文字捕捉的一個清晰瞬間。
+想法的美在於其簡潔性。它們不需要精心設計的結構或廣泛的研究。只是用文字捕捉的清晰時刻。
 
-*你今天會想些什麼呢？*
-
----
-
-import GiscusComments from '../../../components/GiscusComments.astro';
-
-<GiscusComments />
+*你今天會想什麼呢？*

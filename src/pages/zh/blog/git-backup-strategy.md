@@ -1,7 +1,8 @@
 ---
-title: Git 多平台備份策略 - 確保代碼安全的完整指南
+layout: ../../../layouts/BlogLayout.astro
+title: Git 多平台備份策略 - 代碼安全完整指南
 pubDate: 2024-12-01
-description: 詳細介紹如何將公開 Git 倉庫同步到多個免費雲端平台，實現可靠的代碼備份策略。
+description: 如何將公共 Git 倉庫同步到多個免費雲平台的完整指南，實現可靠的代碼備份策略。
 author: ccc333bbb
 language: zh
 status: published

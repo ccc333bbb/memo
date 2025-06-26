@@ -1,5 +1,6 @@
 ---
-title: Memo Website
+layout: ../../../layouts/BlogLayout.astro
+title: Memo Website Project
 pubDate: 2024-06-24
 description: A multilingual personal memo website built with Astro framework
 author: ccc333bbb
@@ -10,6 +11,8 @@ techStack: ["Astro", "TypeScript", "GitHub Pages", "GitHub Actions"]
 demoUrl: ""
 sourceUrl: "https://github.com/ccc333bbb/memo"
 thumbnail: ""
+category: "project"
+tags: ["astro", "web", "personal", "memo"]
 ---
 
 # Memo Website 🚀

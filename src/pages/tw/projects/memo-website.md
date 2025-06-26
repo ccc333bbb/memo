@@ -1,7 +1,8 @@
 ---
-title: 備忘錄網站
+layout: ../../../layouts/BlogLayout.astro
+title: 備忘錄網站項目
 pubDate: 2024-06-24
-description: 使用 Astro 框架建立的多語言個人備忘錄網站
+description: 使用 Astro 和現代網頁技術構建的個人備忘錄網站
 author: ccc333bbb
 language: tw
 status: published
@@ -10,6 +11,8 @@ techStack: ["Astro", "TypeScript", "GitHub Pages", "GitHub Actions"]
 demoUrl: ""
 sourceUrl: "https://github.com/ccc333bbb/memo"
 thumbnail: ""
+category: "project"
+tags: ["astro", "web", "personal", "memo"]
 ---
 
 # 備忘錄網站 🚀
