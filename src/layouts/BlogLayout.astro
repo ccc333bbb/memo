@@ -1,0 +1,59 @@
+---
+import Layout from './Layout.astro';
+import GiscusComments from '../components/GiscusComments.astro';
+
+const { frontmatter } = Astro.props;
+const { title, lang = 'en' } = frontmatter;
+---
+
+<Layout title={title} lang={lang}>
+  <main class="blog-container">
+    <article class="blog-content">
+      <slot />
+    </article>
+
+    <section class="comments-section">
+      <h2>Comments</h2>
+      <GiscusComments
+        lang={lang}
+        theme="purple_dark"
+      />
+    </section>
+  </main>
+</Layout>
+
+<style>
+  .blog-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 0 1.5rem;
+  }
+
+  .blog-content {
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    margin-bottom: 2rem;
+  }
+
+  .comments-section {
+    margin-top: 3rem;
+  }
+
+  .comments-section h2 {
+    margin-bottom: 1.5rem;
+    font-family: 'Noto Serif SC', serif;
+    font-weight: 500;
+  }
+
+  @media (max-width: 768px) {
+    .blog-container {
+      padding: 0 1rem;
+    }
+
+    .blog-content {
+      padding: 1.5rem;
+    }
+  }
+</style>

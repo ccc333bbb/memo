@@ -14,41 +14,41 @@ export interface Props {
   loading?: 'lazy' | 'eager';
 }
 
-const {
-  repo = "ccc333bbb/memo",
-  repoId = "R_kgDOO6akLA",
-  category = "Announcements",
-  categoryId = "DIC_kwDOO6akLM4Cr_hK",
-  mapping = "pathname",
-  strict = false,
-  reactionsEnabled = true,
-  emitMetadata = false,
-  inputPosition = "bottom",
-  theme = "purple_dark",
-  lang = "en",
-  loading = "lazy"
-} = Astro.props;
+const props = Astro.props;
 ---
 
 <div class="giscus-container">
   <div class="giscus" id="giscus"></div>
 </div>
 
-<script>
+<script define:vars={{
+  repo: props.repo ?? "ccc333bbb/memo",
+  repoId: props.repoId ?? "R_kgDOO6akLA",
+  category: props.category ?? "Announcements",
+  categoryId: props.categoryId ?? "DIC_kwDOO6akLM4Cr_hK",
+  mapping: props.mapping ?? "pathname",
+  strict: props.strict ?? false,
+  reactionsEnabled: props.reactionsEnabled ?? true,
+  emitMetadata: props.emitMetadata ?? false,
+  inputPosition: props.inputPosition ?? "bottom",
+  theme: props.theme ?? "purple_dark",
+  lang: props.lang ?? "en",
+  loading: props.loading ?? "lazy"
+}}>
   const giscusScript = document.createElement('script');
   giscusScript.src = 'https://giscus.app/client.js';
-  giscusScript.setAttribute('data-repo', 'ccc333bbb/memo');
-  giscusScript.setAttribute('data-repo-id', 'R_kgDOO6akLA');
-  giscusScript.setAttribute('data-category', 'Announcements');
-  giscusScript.setAttribute('data-category-id', 'DIC_kwDOO6akLM4Cr_hK');
-  giscusScript.setAttribute('data-mapping', 'pathname');
-  giscusScript.setAttribute('data-strict', '0');
-  giscusScript.setAttribute('data-reactions-enabled', '1');
-  giscusScript.setAttribute('data-emit-metadata', '0');
-  giscusScript.setAttribute('data-input-position', 'bottom');
-  giscusScript.setAttribute('data-theme', 'purple_dark');
-  giscusScript.setAttribute('data-lang', 'en');
-  giscusScript.setAttribute('data-loading', 'lazy');
+  giscusScript.setAttribute('data-repo', repo);
+  giscusScript.setAttribute('data-repo-id', repoId);
+  giscusScript.setAttribute('data-category', category);
+  giscusScript.setAttribute('data-category-id', categoryId);
+  giscusScript.setAttribute('data-mapping', mapping);
+  giscusScript.setAttribute('data-strict', strict ? '1' : '0');
+  giscusScript.setAttribute('data-reactions-enabled', reactionsEnabled ? '1' : '0');
+  giscusScript.setAttribute('data-emit-metadata', emitMetadata ? '1' : '0');
+  giscusScript.setAttribute('data-input-position', inputPosition);
+  giscusScript.setAttribute('data-theme', theme);
+  giscusScript.setAttribute('data-lang', lang);
+  giscusScript.setAttribute('data-loading', loading);
   giscusScript.crossOrigin = 'anonymous';
   giscusScript.async = true;
   
@@ -75,4 +75,4 @@ const {
       margin-top: 2rem;
     }
   }
-</style> 
+</style>

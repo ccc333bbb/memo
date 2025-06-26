@@ -1,4 +1,5 @@
 ---
+layout: ../../../layouts/BlogLayout.astro
 title: Hello World
 pubDate: 2024-06-24
 description: Welcome to my personal memo website! This is my first blog post.
@@ -41,9 +42,3 @@ Thank you for visiting, and I hope you find something useful here!
 ---
 
 *This post marks the beginning of my journey sharing knowledge and experiences through this platform.*
-
----
-
-import GiscusComments from '../../../components/GiscusComments.astro';
-
-<GiscusComments />

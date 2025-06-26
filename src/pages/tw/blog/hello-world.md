@@ -1,4 +1,5 @@
 ---
+layout: ../../../layouts/BlogLayout.astro
 title: 哈囉世界
 pubDate: 2024-06-24
 description: 歡迎來到我的個人備忘錄網站！這是我的第一篇部落格文章。
@@ -41,9 +42,3 @@ status: published
 ---
 
 *這篇文章標誌著我透過這個平台分享知識和經驗的旅程開始。*
-
----
-
-import GiscusComments from '../../../components/GiscusComments.astro';
-
-<GiscusComments />
