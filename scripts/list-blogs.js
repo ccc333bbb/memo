@@ -11,7 +11,11 @@ const __dirname = path.dirname(__filename);
 class BlogLister {
   constructor() {
     this.githubAPI = new GitHubAPI();
-    this.blogDir = path.join(__dirname, '../src/pages/zh-TW/blog');
+    this.blogDirs = {
+      en: path.join(__dirname, '../src/pages/en/blog'),
+      zh: path.join(__dirname, '../src/pages/zh/blog'),
+      tw: path.join(__dirname, '../src/pages/tw/blog'),
+    };
   }
 
   /**
@@ -46,17 +50,32 @@ class BlogLister {
   }
 
   /**
-   * 獲取所有 blog posts
+   * 獲取指定語言的 blog posts
+   * @param {string} lang - 語言代碼
    * @returns {Promise<Array>} blog posts 數組
    */
-  async getAllBlogPosts() {
+  async getBlogPostsByLanguage(lang) {
+    const blogDir = this.blogDirs[lang];
+    if (!blogDir) {
+      console.warn(`⚠️  不支持的語言: ${lang}`);
+      return [];
+    }
+
     try {
-      const files = await fs.readdir(this.blogDir);
+      // 檢查目錄是否存在
+      try {
+        await fs.access(blogDir);
+      } catch (error) {
+        console.warn(`⚠️  目錄不存在: ${blogDir}`);
+        return [];
+      }
+
+      const files = await fs.readdir(blogDir);
       const blogPosts = [];
 
       for (const file of files) {
         if (file.endsWith('.md')) {
-          const filepath = path.join(this.blogDir, file);
+          const filepath = path.join(blogDir, file);
           const content = await fs.readFile(filepath, 'utf8');
           
           try {
@@ -65,6 +84,7 @@ class BlogLister {
               blogPosts.push({
                 filename: file,
                 filepath,
+                lang,
                 ...frontmatter,
               });
             }
@@ -74,15 +94,30 @@ class BlogLister {
         }
       }
 
-      return blogPosts.sort((a, b) => {
-        const dateA = new Date(a.pubDate || '1970-01-01');
-        const dateB = new Date(b.pubDate || '1970-01-01');
-        return dateB - dateA;
-      });
+      return blogPosts;
     } catch (error) {
-      console.error('❌ 讀取 blog posts 失敗:', error.message);
+      console.error(`❌ 讀取 ${lang} blog posts 失敗:`, error.message);
       return [];
     }
+  }
+
+  /**
+   * 獲取所有語言的 blog posts
+   * @returns {Promise<Array>} blog posts 數組
+   */
+  async getAllBlogPosts() {
+    const allPosts = [];
+    
+    for (const lang of Object.keys(this.blogDirs)) {
+      const posts = await this.getBlogPostsByLanguage(lang);
+      allPosts.push(...posts);
+    }
+
+    return allPosts.sort((a, b) => {
+      const dateA = new Date(a.pubDate || '1970-01-01');
+      const dateB = new Date(b.pubDate || '1970-01-01');
+      return dateB - dateA;
+    });
   }
 
   /**
@@ -145,31 +180,42 @@ class BlogLister {
       issueMap.set(issue.number, issue);
     });
 
-    console.log('┌─────────────────────────────────────────────────────────────────────────────────┐');
-    console.log('│ 標題                                    │ 狀態      │ 發布日期   │ Issue │');
-    console.log('├─────────────────────────────────────────────────────────────────────────────────┤');
+    console.log('┌─────────────────────────────────────────────────────────────────────────────────────────┐');
+    console.log('│ 標題                                    │ 語言 │ 狀態      │ 發布日期   │ Issue │');
+    console.log('├─────────────────────────────────────────────────────────────────────────────────────────┤');
 
     blogPosts.forEach(post => {
       const title = (post.title || 'Untitled').padEnd(40);
+      const lang = (post.lang || 'N/A').padEnd(4);
       const status = this.formatStatus(post.status).padEnd(10);
       const pubDate = this.formatDate(post.pubDate).padEnd(10);
       const issueNum = post.githubIssue ? `#${post.githubIssue}` : 'N/A';
       
-      console.log(`│ ${title} │ ${status} │ ${pubDate} │ ${issueNum.padEnd(6)} │`);
+      console.log(`│ ${title} │ ${lang} │ ${status} │ ${pubDate} │ ${issueNum.padEnd(6)} │`);
     });
 
-    console.log('└─────────────────────────────────────────────────────────────────────────────────┘');
+    console.log('└─────────────────────────────────────────────────────────────────────────────────────────┘');
 
     // 顯示統計信息
     const draftCount = blogPosts.filter(p => p.status === 'draft').length;
     const publishedCount = blogPosts.filter(p => p.status === 'published').length;
     const withIssuesCount = blogPosts.filter(p => p.githubIssue).length;
+    
+    // 按語言統計
+    const langStats = {};
+    Object.keys(this.blogDirs).forEach(lang => {
+      langStats[lang] = blogPosts.filter(p => p.lang === lang).length;
+    });
 
     console.log(`\n📊 統計信息:`);
     console.log(`   • 總文章數: ${blogPosts.length}`);
     console.log(`   • Draft: ${draftCount}`);
     console.log(`   • Published: ${publishedCount}`);
     console.log(`   • 有 GitHub Issue: ${withIssuesCount}`);
+    console.log(`\n🌍 語言分布:`);
+    Object.entries(langStats).forEach(([lang, count]) => {
+      console.log(`   • ${lang}: ${count} 篇`);
+    });
 
     // 顯示 GitHub issues 狀態
     if (issues.length > 0) {

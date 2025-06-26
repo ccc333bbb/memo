@@ -1,95 +1,50 @@
 ---
+import { getNavigationConfig, getLanguageSwitcherConfig, isActivePath, getLanguageSwitchPath } from '../config/navigation';
+import { SITE_CONFIG, type Language } from '../config/site';
+
 export interface Props {
-  lang: 'en' | 'zh' | 'tw';
+  lang: Language;
   currentPath: string;
 }
 
 const { lang, currentPath } = Astro.props;
 
-// 導航配置
-const navigationConfig = {
-  en: {
-    home: { label: 'Home', path: '/memo/en/' },
-    blog: { label: 'Blog', path: '/memo/en/blog/' },
-    thoughts: { label: 'Thoughts', path: '/memo/en/thoughts/' },
-    projects: { label: 'Projects', path: '/memo/en/projects/' },
-    bookmarks: { label: 'Bookmarks', path: '/memo/en/bookmarks/' },
-    movieReview: { label: 'Movie Reviews', path: '/memo/en/movie-review/' },
-    langSwitcher: {
-      zh: { label: '简中', path: '/memo/zh/' },
-      tw: { label: '繁中', path: '/memo/tw/' }
-    }
-  },
-  zh: {
-    home: { label: '首页', path: '/memo/zh/' },
-    blog: { label: '博客', path: '/memo/zh/blog/' },
-    thoughts: { label: '想法', path: '/memo/zh/thoughts/' },
-    projects: { label: '项目', path: '/memo/zh/projects/' },
-    bookmarks: { label: '书签', path: '/memo/zh/bookmarks/' },
-    movieReview: { label: '观影心得', path: '/memo/zh/movie-review/' },
-    langSwitcher: {
-      en: { label: 'EN', path: '/memo/en/' },
-      tw: { label: '繁中', path: '/memo/tw/' }
-    }
-  },
-  tw: {
-    home: { label: '首頁', path: '/memo/tw/' },
-    blog: { label: '部落格', path: '/memo/tw/blog/' },
-    thoughts: { label: '想法', path: '/memo/tw/thoughts/' },
-    projects: { label: '專案', path: '/memo/tw/projects/' },
-    bookmarks: { label: '書籤', path: '/memo/tw/bookmarks/' },
-    movieReview: { label: '觀影心得', path: '/memo/tw/movie-review/' },
-    langSwitcher: {
-      en: { label: 'EN', path: '/memo/en/' },
-      zh: { label: '简中', path: '/memo/zh/' }
-    }
-  }
-};
+// Get navigation configuration for current language
+const navigationConfig = getNavigationConfig(lang);
+const languageSwitcher = getLanguageSwitcherConfig(lang);
 
-const config = navigationConfig[lang];
-
-// 檢查當前路徑是否為活動狀態
-const isActive = (path: string) => {
-  if (path === '/memo/' && currentPath === '/memo/') return true;
-  if (path !== '/memo/' && currentPath.startsWith(path)) return true;
-  return false;
-};
-
-// 獲取對應的語言切換路徑
-const getLangSwitchPath = (targetLang: string) => {
-  const currentSection = currentPath.replace(`/memo/${lang}/`, '');
-  if (currentSection === '') return `/memo/${targetLang}/`;
-  return `/memo/${targetLang}/${currentSection}`;
-};
+// Helper function to check if a navigation item is active
+const isActive = (path: string) => isActivePath(currentPath, path);
 ---
 
 <nav class="navbar">
   <div class="nav-container">
-    <a href="/memo/" class="nav-logo">ccc333bbb</a>
+    <a href={SITE_CONFIG.baseUrl + '/'} class="nav-logo">{SITE_CONFIG.author}</a>
     <div class="nav-links">
-      <a href={config.home.path} class={`nav-link ${isActive(config.home.path) ? 'active' : ''}`}>
-        {config.home.label}
+      <a href={navigationConfig.home.path} class={`nav-link ${isActive(navigationConfig.home.path) ? 'active' : ''}`}>
+        {navigationConfig.home.label}
       </a>
-      <a href={config.blog.path} class={`nav-link ${isActive(config.blog.path) ? 'active' : ''}`}>
-        {config.blog.label}
+      <a href={navigationConfig.blog.path} class={`nav-link ${isActive(navigationConfig.blog.path) ? 'active' : ''}`}>
+        {navigationConfig.blog.label}
       </a>
-      <a href={config.thoughts.path} class={`nav-link ${isActive(config.thoughts.path) ? 'active' : ''}`}>
-        {config.thoughts.label}
+      <a href={navigationConfig.thoughts.path} class={`nav-link ${isActive(navigationConfig.thoughts.path) ? 'active' : ''}`}>
+        {navigationConfig.thoughts.label}
       </a>
-      <a href={config.projects.path} class={`nav-link ${isActive(config.projects.path) ? 'active' : ''}`}>
-        {config.projects.label}
+      <a href={navigationConfig.projects.path} class={`nav-link ${isActive(navigationConfig.projects.path) ? 'active' : ''}`}>
+        {navigationConfig.projects.label}
       </a>
-      <a href={config.bookmarks.path} class={`nav-link ${isActive(config.bookmarks.path) ? 'active' : ''}`}>
-        {config.bookmarks.label}
+      <a href={navigationConfig.bookmarks.path} class={`nav-link ${isActive(navigationConfig.bookmarks.path) ? 'active' : ''}`}>
+        {navigationConfig.bookmarks.label}
       </a>
-      <a href={config.movieReview.path} class={`nav-link ${isActive(config.movieReview.path) ? 'active' : ''}`}>
-        {config.movieReview.label}
+      <a href={navigationConfig.movieReview.path} class={`nav-link ${isActive(navigationConfig.movieReview.path) ? 'active' : ''}`}>
+        {navigationConfig.movieReview.label}
       </a>
       <div class="lang-switcher">
-        {Object.entries(config.langSwitcher).map(([targetLang, langConfig]) => (
+        {languageSwitcher.map((langConfig) => (
           <a 
-            href={getLangSwitchPath(targetLang)} 
+            href={getLanguageSwitchPath(currentPath, lang, langConfig.code)} 
             class="lang-link"
+            title={langConfig.name}
           >
             {langConfig.label}
           </a>

@@ -1,4 +1,6 @@
 ---
+import { SITE_CONFIG } from '../config/site';
+
 export interface Props {
   repo?: string;
   repoId?: string;
@@ -22,17 +24,17 @@ const props = Astro.props;
 </div>
 
 <script define:vars={{
-  repo: props.repo ?? "ccc333bbb/memo",
-  repoId: props.repoId ?? "R_kgDOO6akLA",
-  category: props.category ?? "Announcements",
-  categoryId: props.categoryId ?? "DIC_kwDOO6akLM4Cr_hK",
-  mapping: props.mapping ?? "pathname",
+  repo: props.repo ?? SITE_CONFIG.giscus.repo,
+  repoId: props.repoId ?? SITE_CONFIG.giscus.repoId,
+  category: props.category ?? SITE_CONFIG.giscus.category,
+  categoryId: props.categoryId ?? SITE_CONFIG.giscus.categoryId,
+  mapping: props.mapping ?? SITE_CONFIG.giscus.mapping,
   strict: props.strict ?? false,
   reactionsEnabled: props.reactionsEnabled ?? true,
   emitMetadata: props.emitMetadata ?? false,
   inputPosition: props.inputPosition ?? "bottom",
-  theme: props.theme ?? "purple_dark",
-  lang: props.lang ?? "en",
+  theme: props.theme ?? SITE_CONFIG.giscus.theme,
+  lang: props.lang ?? SITE_CONFIG.defaultLanguage,
   loading: props.loading ?? "lazy"
 }}>
   const giscusScript = document.createElement('script');

@@ -6,15 +6,26 @@ if (process.env.NODE_ENV !== 'production') {
   dotenv.config();
 }
 
+// Configuration constants
+const GITHUB_CONFIG = {
+  owner: process.env.GITHUB_OWNER || 'ccc333bbb',
+  repo: process.env.GITHUB_REPO || 'memo',
+  token: process.env.GITHUB_TOKEN,
+};
+
 class GitHubAPI {
   constructor() {
+    // Validate configuration
+    if (!GITHUB_CONFIG.token && process.env.NODE_ENV !== 'production') {
+      console.warn('⚠️  GITHUB_TOKEN not set. GitHub API features may not work.');
+    }
+    
     this.octokit = new Octokit({
-      auth: process.env.GITHUB_TOKEN,
+      auth: GITHUB_CONFIG.token,
     });
     
-    // 從環境變量或 package.json 獲取倉庫信息
-    this.owner = process.env.GITHUB_OWNER || 'ccc333bbb';
-    this.repo = process.env.GITHUB_REPO || 'capricious-centauri';
+    this.owner = GITHUB_CONFIG.owner;
+    this.repo = GITHUB_CONFIG.repo;
   }
 
   /**
@@ -25,20 +36,43 @@ class GitHubAPI {
    * @returns {Promise<Object>} 創建的 issue 信息
    */
   async createIssue(title, body, labels = ['blog-post', 'draft']) {
+    // Validate inputs
+    if (!title || title.trim().length === 0) {
+      throw new Error('Issue title cannot be empty');
+    }
+    
+    if (!body || body.trim().length === 0) {
+      throw new Error('Issue body cannot be empty');
+    }
+    
+    if (!GITHUB_CONFIG.token) {
+      throw new Error('GitHub token is required to create issues');
+    }
+
     try {
       const response = await this.octokit.issues.create({
         owner: this.owner,
         repo: this.repo,
-        title,
-        body,
+        title: title.trim(),
+        body: body.trim(),
         labels,
       });
       
       console.log(`✅ 成功創建 Issue #${response.data.number}: ${title}`);
       return response.data;
     } catch (error) {
-      console.error('❌ 創建 Issue 失敗:', error.message);
-      throw error;
+      if (error.status === 401) {
+        throw new Error('❌ GitHub token 無效或已過期');
+      } else if (error.status === 403) {
+        throw new Error('❌ 沒有權限創建 Issue，請檢查 token 權限');
+      } else if (error.status === 404) {
+        throw new Error(`❌ 倉庫 ${this.owner}/${this.repo} 不存在或無法訪問`);
+      } else if (error.status === 422) {
+        throw new Error('❌ Issue 數據格式錯誤');
+      } else {
+        console.error('❌ 創建 Issue 失敗:', error.message);
+        throw new Error(`創建 Issue 失敗: ${error.message}`);
+      }
     }
   }
 
