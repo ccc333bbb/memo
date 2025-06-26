@@ -5,6 +5,7 @@ pubDate: 2024-06-24
 description: 歡迎來到我的個人備忘錄網站！這是我的第一篇部落格文章。
 author: ccc333bbb
 language: tw
+lang: tw
 status: published
 ---
 

@@ -5,6 +5,7 @@ pubDate: 2024-12-01
 description: 如何將公共 Git 倉庫同步到多個免費雲平台的完整指南，實現可靠的代碼備份策略。
 author: ccc333bbb
 language: zh
+lang: zh
 status: published
 ---
 

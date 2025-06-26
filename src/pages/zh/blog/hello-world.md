@@ -5,6 +5,7 @@ pubDate: 2024-06-24
 description: 欢迎来到我的个人备忘录网站！这是我的第一篇博客文章。
 author: ccc333bbb
 language: zh
+lang: zh
 status: published
 ---
 

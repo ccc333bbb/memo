@@ -5,6 +5,7 @@ pubDate: 2024-06-24
 description: 使用 Astro 和現代網頁技術構建的個人備忘錄網站
 author: ccc333bbb
 language: zh
+lang: zh
 status: published
 projectStatus: in-progress
 techStack: ["Astro", "TypeScript", "GitHub Pages", "GitHub Actions"]

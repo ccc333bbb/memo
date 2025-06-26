@@ -5,6 +5,7 @@ pubDate: 2024-06-24
 description: Welcome to my personal memo website! This is my first blog post.
 author: ccc333bbb
 language: en
+lang: en
 status: published
 ---
 

@@ -5,6 +5,7 @@ pubDate: 2024-06-24
 description: A brief reflection on starting this thoughts collection
 author: ccc333bbb
 language: en
+lang: en
 status: published
 tags: ["meta", "beginning", "reflection"]
 ---

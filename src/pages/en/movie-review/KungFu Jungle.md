@@ -5,6 +5,7 @@ pubDate: 2024-06-24
 description: A review of the action movie Kung Fu Jungle starring Donnie Yen
 author: ccc333bbb
 language: en
+lang: en
 status: published
 category: "movie-review"
 tags: ["action", "kung-fu", "donnie-yen", "martial-arts"]

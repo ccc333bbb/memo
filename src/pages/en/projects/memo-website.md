@@ -5,6 +5,7 @@ pubDate: 2024-06-24
 description: A multilingual personal memo website built with Astro framework
 author: ccc333bbb
 language: en
+lang: en
 status: published
 projectStatus: in-progress
 techStack: ["Astro", "TypeScript", "GitHub Pages", "GitHub Actions"]

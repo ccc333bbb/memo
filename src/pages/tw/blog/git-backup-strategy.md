@@ -5,6 +5,7 @@ pubDate: 2024-12-01
 description: 詳細介紹如何將公開 Git 倉庫同步到多個免費雲端平台，實現可靠的程式碼備份策略。
 author: ccc333bbb
 language: tw
+lang: tw
 status: published
 ---
 

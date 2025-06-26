@@ -5,6 +5,7 @@ pubDate: 2024-06-24
 description: Essential resources and tools for modern web development
 author: ccc333bbb
 language: en
+lang: en
 status: published
 category: "development"
 tags: ["web", "development", "frontend", "backend", "tools"]

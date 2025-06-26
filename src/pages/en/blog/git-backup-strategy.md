@@ -5,6 +5,7 @@ pubDate: 2024-12-01
 description: A comprehensive guide on how to sync public Git repositories to multiple free cloud platforms for reliable code backup strategies.
 author: ccc333bbb
 language: en
+lang: en
 status: published
 ---
 

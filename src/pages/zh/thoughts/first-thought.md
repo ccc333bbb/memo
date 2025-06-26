@@ -5,6 +5,7 @@ pubDate: 2024-06-24
 description: 關於開始這個想法集合的簡短反思
 author: ccc333bbb
 language: zh
+lang: zh
 status: published
 tags: ["meta", "beginning", "reflection"]
 ---
