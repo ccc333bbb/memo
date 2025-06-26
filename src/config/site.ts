@@ -20,7 +20,7 @@ export const SITE_CONFIG = {
   giscus: {
     repo: "ccc333bbb/memo",
     repoId: "R_kgDOO6akLA",
-    category: "Announcements", 
+    category: "General", 
     categoryId: "DIC_kwDOO6akLM4Cr_hK",
     mapping: "pathname",
     theme: "purple_dark",

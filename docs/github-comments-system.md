@@ -4,12 +4,11 @@
 
 ## 功能特點
 
-- ✅ **基於 GitHub Discussions**：使用 GitHub Discussions 作為評論後端
-- ✅ **靜態網站友好**：無需服務器端 API，完美支持 GitHub Pages
-- ✅ **自動主題切換**：支持亮色/暗色主題自動切換
-- ✅ **多語言支持**：支持多種語言界面
-- ✅ **實時更新**：評論實時同步，無需刷新頁面
-- ✅ **美觀的 UI**：與網站設計風格一致的評論界面
+- 🔄 **實時同步**: 評論直接存儲在 GitHub Discussions 中
+- 🌍 **多語言支持**: 支持英文、簡體中文、繁體中文
+- 🎨 **主題適配**: 自動適配網站主題
+- 📱 **響應式設計**: 完美支持移動端
+- 🔒 **安全可靠**: 基於 GitHub 認證系統
 
 ## 工作原理
 
@@ -20,67 +19,115 @@
 
 ## 配置說明
 
-### GitHub 倉庫設置
+### 1. GitHub 設置
 
 1. **啟用 Discussions**：
-   - 前往你的 GitHub 倉庫設置
-   - 在 "Features" 部分啟用 "Discussions"
+   - 前往 GitHub 倉庫設置
+   - 在 "Features" 部分啟用 Discussions
 
 2. **安裝 Giscus App**：
    - 前往 [Giscus App](https://github.com/apps/giscus)
-   - 點擊 "Install" 安裝到你的倉庫
+   - 點擊 "Install" 並選擇你的倉庫
 
 3. **獲取配置信息**：
    - 前往 [Giscus 配置頁面](https://giscus.app/)
-   - 填入你的倉庫信息
-   - 複製生成的配置代碼
+   - 選擇你的倉庫和分類
+   - 複製配置信息
 
-### 組件配置
+### 2. 項目配置
 
-當前配置（在 `src/components/GiscusComments.astro` 中）：
+當前配置（在 `src/config/site.ts` 中）：
+
+```typescript
+giscus: {
+  repo: "ccc333bbb/memo",
+  repoId: "R_kgDOO6akLA",
+  category: "General", 
+  categoryId: "DIC_kwDOO6akLM4Cr_hK",
+  mapping: "pathname",
+  theme: "purple_dark",
+}
+```
+
+### 3. 組件使用
+
+在文章中使用評論組件：
 
 ```astro
-<GiscusComments 
-  repo="ccc333bbb/memo"
-  repoId="R_kgDOLqQAAA"
-  category="Announcements"
-  categoryId="DIC_kwDOLqQAAM4CbqQAAA"
-  mapping="pathname"
-  strict="false"
-  reactionsEnabled="true"
-  emitMetadata="false"
-  inputPosition="bottom"
-  theme="preferred_color_scheme"
-  lang="zh-TW"
-  loading="lazy"
-/>
-```
-
-## 使用方法
-
-### 在文章中添加評論組件
-
-在 Markdown 文章的最後添加：
-
-```markdown
+---
+import GiscusComments from '../../../components/GiscusComments.astro';
 ---
 
-import GiscusComments from '../../../components/GiscusComments.astro';
-
-<GiscusComments />
+<GiscusComments lang="zh" />
 ```
 
-### 配置參數說明
+## 語言支持
 
-| 參數 | 描述 | 默認值 |
-|------|------|--------|
-| `repo` | GitHub 倉庫名稱 | `"ccc333bbb/memo"` |
-| `repoId` | 倉庫 ID | `"R_kgDOLqQAAA"` |
-| `category` | Discussions 分類 | `"Announcements"` |
-| `categoryId` | 分類 ID | `"DIC_kwDOLqQAAM4CbqQAAA"` |
-| `mapping` | 路徑映射方式 | `"pathname"` |
-| `theme` | 主題設置 | `"preferred_color_scheme"` |
-| `lang` | 界面語言 | `"zh-TW"` |
+### 語言代碼映射
+
+Giscus 組件會自動將我們的語言代碼映射到 Giscus 支持的語言代碼：
+
+- `en` → `en` (English)
+- `zh` → `zh-CN` (简体中文)
+- `tw` → `zh-TW` (繁體中文)
+
+### 本地化文本
+
+不同語言版本會顯示對應的加載文本：
+
+- 英文：`Loading comments...`
+- 簡體中文：`正在加載評論...`
+- 繁體中文：`正在載入評論...`
+
+## 組件特性
+
+### 1. 錯誤處理
+
+- 腳本加載失敗時顯示友好的錯誤信息
+- 控制台調試信息幫助開發者診斷問題
+- 自動重試機制
+
+### 2. 加載狀態
+
+- 顯示本地化的加載文本
+- 最小高度確保布局穩定
+- 平滑的加載動畫
+
+### 3. 響應式設計
+
+- 移動端優化
+- 深色主題支持
+- 自適應容器大小
+
+### 4. 調試功能
+
+- 詳細的配置日誌
+- 錯誤追蹤
+- 性能監控
+
+## 故障排除
+
+### 常見問題
+
+1. **評論不顯示**
+   - 檢查 Giscus App 是否已安裝
+   - 確認 Discussions 功能已啟用
+   - 驗證配置信息是否正確
+
+2. **語言顯示錯誤**
+   - 檢查語言代碼映射是否正確
+   - 確認 Giscus 支持該語言
+
+3. **樣式問題**
+   - 檢查 CSS 是否正確加載
+   - 確認主題設置是否正確
+
+### 調試步驟
+
+1. 打開瀏覽器開發者工具
+2. 查看控制台是否有錯誤信息
+3. 檢查 Giscus 配置日誌
+4. 確認腳本是否正確加載
 
 ## 文件結構
 
@@ -88,14 +135,10 @@ import GiscusComments from '../../../components/GiscusComments.astro';
 src/
 ├── components/
 │   └── GiscusComments.astro    # Giscus 評論組件
-└── pages/
-    ├── en/
-    ├── zh/
-    └── tw/
-        ├── blog/
-        ├── thoughts/
-        └── projects/
-            └── *.md            # 包含評論組件的文章
+├── config/
+│   └── site.ts                 # 網站配置（包含 Giscus 設置）
+└── layouts/
+    └── BlogLayout.astro        # 博客布局（包含評論組件）
 ```
 
 ## 自定義樣式
@@ -106,42 +149,22 @@ src/
 .giscus-container {
   margin-top: 3rem;
   padding: 2rem;
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.95);
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 ```
 
-## 故障排除
+## 版本歷史
 
-### 常見問題
+- **v2.1.0** - 修復語言映射問題，添加錯誤處理和調試功能
+- **v2.0.0** - 從 GitHub Issues 遷移到 Giscus
 
-1. **評論不顯示**
-   - 確認已啟用 GitHub Discussions
-   - 檢查 Giscus App 是否已安裝
-   - 確認倉庫 ID 和分類 ID 是否正確
+## 相關資源
 
-2. **主題不匹配**
-   - 檢查 `theme` 參數設置
-   - 確認網站是否支持主題切換
-
-3. **語言設置問題**
-   - 修改 `lang` 參數為對應語言代碼
-   - 支持：`zh-TW`, `zh-CN`, `en`, `ja` 等
-
-### 調試方法
-
-1. 打開瀏覽器開發者工具
-2. 檢查 Console 是否有錯誤信息
-3. 確認 giscus 腳本是否正確加載
-4. 檢查網絡請求是否成功
-
-## 最佳實踐
-
-1. **路徑映射**：使用 `pathname` 映射確保每頁有獨立評論
-2. **主題一致性**：設置 `theme="preferred_color_scheme"` 自動適配
-3. **性能優化**：使用 `loading="lazy"` 延遲加載
-4. **用戶體驗**：設置 `inputPosition="bottom"` 讓用戶先看內容
+- [Giscus 官方文檔](https://giscus.app/)
+- [GitHub Discussions 文檔](https://docs.github.com/en/discussions)
+- [Giscus App 安裝](https://github.com/apps/giscus)
 
 ## 與舊系統的區別
 

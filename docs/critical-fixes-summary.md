@@ -1,167 +1,98 @@
-# Critical Issues Fixed - Summary
+# 關鍵修復總結
 
-This document summarizes the critical issues that have been fixed in the codebase.
+## 已修復的問題
 
-## ✅ Issues Fixed
+### 1. 評論系統語言映射問題 ✅
 
-### 1. **Centralized Configuration System**
-- **Problem**: Hardcoded values scattered throughout the codebase
-- **Solution**: Created centralized configuration files
-- **Files Created**:
-  - `src/config/site.ts` - Main site configuration
-  - `src/config/navigation.ts` - Navigation configuration and logic
-  - `src/utils/env.ts` - Environment variable handling
+**問題描述**: 簡體中文和繁體中文的評論系統無法正常工作，英文版本也有問題
 
-### 2. **Eliminated Hardcoded Values**
-- **Problem**: Site URLs, GitHub repo info, and Giscus settings hardcoded
-- **Solution**: Updated all components to use centralized configuration
-- **Files Updated**:
-  - `astro.config.mjs` - Uses configuration constants
-  - `src/components/GiscusComments.astro` - Uses site config for defaults
-  - `src/layouts/Layout.astro` - Uses site config for title and favicon
-  - `src/components/Navigation.astro` - Completely refactored
+**根本原因**: 
+- Giscus 評論系統使用的語言代碼與我們的語言配置不匹配
+- Giscus 支持 `zh-CN` 和 `zh-TW`，但我們使用的是 `zh` 和 `tw`
+- 缺少錯誤處理和調試信息
 
-### 3. **Fixed Directory Structure Inconsistency**
-- **Problem**: Mixed use of `zh-TW`, `zh-tw`, `zh`, and `tw` for Chinese variants
-- **Solution**: Standardized to `en`, `zh`, `tw` directory structure
-- **Actions Taken**:
-  - Removed `src/pages/zh-tw/` directory
-  - Updated all scripts to support consistent language codes
+**修復方案**:
+- 在 `src/components/GiscusComments.astro` 中添加語言代碼映射
+- 將 `zh` 映射到 `zh-CN`，`tw` 映射到 `zh-TW`
+- 添加調試信息和錯誤處理
+- 改進加載狀態顯示
+- 為不同語言設置不同的加載文本
 
-### 4. **Improved Component Architecture**
-- **Problem**: Navigation component was 100+ lines with embedded configuration
-- **Solution**: Extracted configuration and logic to separate files
-- **Benefits**:
-  - Navigation component reduced to ~20 lines
-  - Better separation of concerns
-  - Easier to maintain and modify
+**修改的文件**:
+- `src/components/GiscusComments.astro` - 添加語言映射和錯誤處理
+- `src/config/site.ts` - 更新 Giscus category 配置
 
-### 5. **Enhanced Error Handling**
-- **Problem**: Scripts lacked proper error handling and validation
-- **Solution**: Added comprehensive error handling and validation
-- **Files Updated**:
-  - `scripts/github-api.js` - Added API error handling
-  - `scripts/create-blog.js` - Added input validation and error handling
-  - `scripts/list-blogs.js` - Added directory existence checks
+**測試狀態**: ✅ 構建成功，需要部署後測試
 
-### 6. **Added Input Validation**
-- **Problem**: User inputs not validated, potential runtime errors
-- **Solution**: Created validation utilities and added input checks
-- **Files Created**:
-  - `src/utils/validation.ts` - Input validation utilities
-  - `src/utils/frontmatter.ts` - Frontmatter parsing and validation
+### 2. 網站配置硬編碼問題 ✅
 
-### 7. **Multi-language Script Support**
-- **Problem**: Scripts only supported one language (zh-TW)
-- **Solution**: Updated scripts to support all languages
-- **Improvements**:
-  - Blog creation script now supports en/zh/tw
-  - List blogs script shows language distribution
-  - Better language-specific file handling
+**問題描述**: 網站 URL、GitHub 倉庫信息和 Giscus 設置被硬編碼
 
-### 8. **Better TypeScript Integration**
-- **Problem**: Inconsistent TypeScript usage
-- **Solution**: Added proper type definitions and utilities
-- **Files Created**:
-  - Type definitions for configuration
-  - Validation utilities with proper types
-  - Better interface definitions
+**修復方案**:
+- 創建統一的網站配置文件 `src/config/site.ts`
+- 所有組件使用配置文件中的設置
+- 支持環境變量覆蓋
 
-## 🔧 Configuration Benefits
+**修改的文件**:
+- `src/config/site.ts` - 新增網站配置
+- `src/components/GiscusComments.astro` - 使用配置中的默認值
+- `src/components/Breadcrumb.astro` - 使用配置中的路徑
+- `src/components/Navigation.astro` - 使用配置中的導航
 
-### Before (Problems):
-```javascript
-// Scattered hardcoded values
-site: 'https://ccc333bbb.github.io',
-base: '/memo',
-repo: "ccc333bbb/memo",
-repoId: "R_kgDOO6akLA",
+### 3. 導航系統問題 ✅
 
-// 100+ lines navigation config in component
-const navigationConfig = { /* massive object */ }
-```
+**問題描述**: 導航組件中的硬編碼路徑和語言設置
 
-### After (Fixed):
-```typescript
-// Centralized configuration
-export const SITE_CONFIG = {
-  siteUrl: "https://ccc333bbb.github.io",
-  baseUrl: "/memo",
-  giscus: { repo: "ccc333bbb/memo", repoId: "R_kgDOO6akLA" },
-  // ... all config in one place
-}
+**修復方案**:
+- 使用配置文件中的導航路徑
+- 改進語言切換邏輯
+- 添加響應式設計
 
-// Clean component usage
-const navigationConfig = getNavigationConfig(lang);
-```
+**修改的文件**:
+- `src/components/Navigation.astro` - 使用配置和改進響應式設計
 
-## 📊 Impact Metrics
+### 4. 麵包屑導航問題 ✅
 
-- **Code Reduction**: Navigation component: 100+ lines → ~20 lines
-- **Configuration Centralization**: 15+ hardcoded values → 1 config file
-- **Error Handling**: 0% → 90% coverage in critical scripts
-- **Type Safety**: Partial → Comprehensive TypeScript types
-- **Multi-language Support**: 1 language → 3 languages in scripts
+**問題描述**: 麵包屑導航中的硬編碼路徑和語言處理
 
-## 🚀 Immediate Benefits
+**修復方案**:
+- 使用配置文件中的路徑
+- 改進多語言支持
+- 添加動態路徑解析
 
-1. **Easy Configuration**: Change any setting in one place
-2. **Consistent Multi-language**: No more directory confusion
-3. **Better Maintainability**: Smaller, focused components
-4. **Type Safety**: Prevents configuration errors
-5. **Robust Error Handling**: Better user experience
-6. **Faster Development**: No hunting for hardcoded values
+**修改的文件**:
+- `src/components/Breadcrumb.astro` - 使用配置和改進多語言支持
 
-## 🔄 Migration Guide
+## 技術改進
 
-### For Developers:
-1. Use `SITE_CONFIG` from `src/config/site.ts` for all site-wide settings
-2. Use navigation helpers from `src/config/navigation.ts`
-3. Use validation utilities from `src/utils/validation.ts`
-4. Follow the standardized language codes: `en`, `zh`, `tw`
+### 1. 配置管理
+- 統一的配置文件管理所有網站設置
+- 支持環境變量覆蓋
+- 類型安全的配置
 
-### For Content Creators:
-1. Use `npm run blog:create` for new posts (now supports all languages)
-2. Use `npm run blog:list` to see all posts with language info
-3. Language selection is now interactive in the creation script
+### 2. 錯誤處理
+- 添加了詳細的錯誤處理和調試信息
+- 改進了用戶體驗和開發者調試
 
-## 🎯 Next Steps
+### 3. 多語言支持
+- 正確的語言代碼映射
+- 本地化的加載文本
+- 改進的語言切換邏輯
 
-The foundation is now solid for:
-1. Adding more content types (projects, bookmarks, thoughts)
-2. Implementing advanced features (search, analytics)
-3. Performance optimizations
-4. Testing and quality assurance
-5. Documentation improvements
+### 4. 響應式設計
+- 改進了移動端適配
+- 添加了深色主題支持
+- 優化了組件樣式
 
-## 📝 Files Modified
+## 部署注意事項
 
-### Created:
-- `src/config/site.ts`
-- `src/config/navigation.ts`
-- `src/utils/env.ts`
-- `src/utils/validation.ts`
-- `src/utils/frontmatter.ts`
-- `docs/critical-fixes-summary.md`
+1. **Giscus 配置**: 確保 GitHub 倉庫中已啟用 Discussions 功能
+2. **環境變量**: 檢查 `GITHUB_TOKEN` 等環境變量是否正確設置
+3. **測試**: 部署後測試所有語言版本的評論功能
 
-### Modified:
-- `astro.config.mjs`
-- `src/components/Navigation.astro`
-- `src/components/GiscusComments.astro`
-- `src/layouts/Layout.astro`
-- `scripts/github-api.js`
-- `scripts/create-blog.js`
-- `scripts/list-blogs.js`
-- `env.example`
+## 待辦事項
 
-### Removed:
-- `src/pages/zh-tw/` directory (inconsistent structure)
-
-## ✅ Verification
-
-All changes have been tested and verified:
-- ✅ Build successful: `npm run build`
-- ✅ Scripts working: `npm run blog:list`
-- ✅ No breaking changes to existing functionality
-- ✅ Improved error messages and validation
-- ✅ Better developer experience
+- [ ] 部署後測試評論系統
+- [ ] 檢查 Giscus App 是否正確安裝
+- [ ] 驗證所有語言版本的評論功能
+- [ ] 添加評論系統的監控和統計

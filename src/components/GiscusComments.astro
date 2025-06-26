@@ -17,10 +17,28 @@ export interface Props {
 }
 
 const props = Astro.props;
+
+// 語言代碼映射：將我們的語言代碼映射到 Giscus 支持的語言代碼
+const giscusLangMap: Record<string, string> = {
+  'en': 'en',
+  'zh': 'zh-CN',
+  'tw': 'zh-TW'
+};
+
+// 加載文本映射
+const loadingTextMap: Record<string, string> = {
+  'en': 'Loading comments...',
+  'zh': '正在加載評論...',
+  'tw': '正在載入評論...'
+};
+
+// 獲取正確的 Giscus 語言代碼
+const giscusLang = giscusLangMap[props.lang ?? SITE_CONFIG.defaultLanguage] || 'en';
+const loadingText = loadingTextMap[props.lang ?? SITE_CONFIG.defaultLanguage] || 'Loading comments...';
 ---
 
 <div class="giscus-container">
-  <div class="giscus" id="giscus"></div>
+  <div class="giscus" id="giscus" data-loading-text={loadingText}></div>
 </div>
 
 <script define:vars={{
@@ -34,9 +52,22 @@ const props = Astro.props;
   emitMetadata: props.emitMetadata ?? false,
   inputPosition: props.inputPosition ?? "bottom",
   theme: props.theme ?? SITE_CONFIG.giscus.theme,
-  lang: props.lang ?? SITE_CONFIG.defaultLanguage,
-  loading: props.loading ?? "lazy"
+  lang: giscusLang,
+  loading: props.loading ?? "lazy",
+  loadingText
 }}>
+  // 調試信息
+  console.log('🔧 Giscus 配置:', {
+    repo,
+    repoId,
+    category,
+    categoryId,
+    mapping,
+    theme,
+    lang,
+    currentPath: window.location.pathname
+  });
+
   const giscusScript = document.createElement('script');
   giscusScript.src = 'https://giscus.app/client.js';
   giscusScript.setAttribute('data-repo', repo);
@@ -54,20 +85,53 @@ const props = Astro.props;
   giscusScript.crossOrigin = 'anonymous';
   giscusScript.async = true;
   
-  document.getElementById('giscus')?.appendChild(giscusScript);
+  // 錯誤處理
+  giscusScript.onerror = function() {
+    console.error('❌ Giscus 腳本加載失敗');
+    const container = document.getElementById('giscus');
+    if (container) {
+      container.innerHTML = `<div style="text-align: center; padding: 2rem; color: #666;">
+        <p>評論加載失敗，請稍後再試</p>
+        <p>Failed to load comments, please try again later</p>
+      </div>`;
+    }
+  };
+  
+  giscusScript.onload = function() {
+    console.log('✅ Giscus 腳本加載成功');
+  };
+  
+  const giscusContainer = document.getElementById('giscus');
+  if (giscusContainer) {
+    giscusContainer.appendChild(giscusScript);
+  } else {
+    console.error('❌ 找不到 giscus 容器元素');
+  }
 </script>
 
 <style>
   .giscus-container {
     margin-top: 3rem;
     padding: 2rem;
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.95);
     border-radius: 12px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.05);
   }
   
   .giscus {
     width: 100%;
+    min-height: 200px;
+  }
+  
+  /* 加載狀態 */
+  .giscus:empty::before {
+    content: attr(data-loading-text);
+    display: block;
+    text-align: center;
+    padding: 2rem;
+    color: #666;
+    font-style: italic;
   }
   
   /* 響應式設計 */
@@ -75,6 +139,18 @@ const props = Astro.props;
     .giscus-container {
       padding: 1rem;
       margin-top: 2rem;
+    }
+    
+    .giscus {
+      min-height: 150px;
+    }
+  }
+  
+  /* 深色主題適配 */
+  @media (prefers-color-scheme: dark) {
+    .giscus-container {
+      background: rgba(30, 30, 30, 0.95);
+      border-color: rgba(255, 255, 255, 0.1);
     }
   }
 </style>

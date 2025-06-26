@@ -111,3 +111,11 @@ This document contains a prioritized list of actionable improvement tasks for th
    - Implement interactive code examples
    - Add support for embedded visualizations
    - Create interactive tutorials and guides
+
+[x] **Fix GiscusComments Component** ✅
+   - ✅ Use props consistently instead of hardcoding values in the script
+   - ✅ Add error handling for when comments fail to load
+   - ✅ Improve styling to match the site's design system
+   - ✅ Fixed language mapping issues (zh → zh-CN, tw → zh-TW)
+   - ✅ Added debug logging and loading states
+   - ✅ Improved responsive design and dark theme support
