@@ -19,8 +19,8 @@ export const SITE_CONFIG = {
   // Giscus comments configuration
   giscus: {
     repo: "ccc333bbb/memo",
-    repoId: "R_kgDOO6akLA",
-    category: "General", 
+    repoId: "1000776748",
+    category: "Announcements",
     categoryId: "DIC_kwDOO6akLM4Cr_hK",
     mapping: "pathname",
     theme: "purple_dark",
