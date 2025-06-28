@@ -3,6 +3,7 @@ import Layout from '../../../layouts/Layout.astro';
 import type { ContentEntry } from '../../../types/content';
 import Navigation from '../../../components/Navigation.astro';
 import Breadcrumb from '../../../components/Breadcrumb.astro';
+import ScrollToTop from '../../../components/ScrollToTop.astro';
 
 const reviews = Object.values(import.meta.glob('./*.md', { eager: true })) as ContentEntry[];
 
@@ -93,6 +94,8 @@ const reviewsByCategory = reviews.reduce((acc, review) => {
             )}
         </div>
     </main>
+    
+    <ScrollToTop />
 </Layout>
 
 <style>

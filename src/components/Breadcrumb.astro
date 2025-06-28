@@ -148,8 +148,8 @@ const showBreadcrumb = breadcrumbs.length > 1; // 只有當有多於一個麵包
     border-bottom: 1px solid rgba(0, 0, 0, 0.06);
     padding: 1rem 0;
     margin-bottom: 2rem;
-    position: sticky;
-    top: 0;
+    position: fixed;
+    top: 80px; /* 主導覽列高度 */
     z-index: 99;
     width: 100%;
     box-sizing: border-box;
@@ -247,6 +247,7 @@ const showBreadcrumb = breadcrumbs.length > 1; // 只有當有多於一個麵包
     .breadcrumb {
       padding: 0.75rem 0;
       margin-bottom: 1.5rem;
+      top: 70px; /* 手機版主導覽列高度 */
     }
     .breadcrumb-container {
       flex-direction: column;

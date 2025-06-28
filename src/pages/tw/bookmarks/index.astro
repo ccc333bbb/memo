@@ -3,6 +3,7 @@ import Layout from '../../../layouts/Layout.astro';
 import type { ContentEntry } from '../../../types/content';
 import Navigation from '../../../components/Navigation.astro';
 import Breadcrumb from '../../../components/Breadcrumb.astro';
+import ScrollToTop from '../../../components/ScrollToTop.astro';
 
 const posts = Object.values(import.meta.glob('./*.md', { eager: true })) as ContentEntry[];
 ---
@@ -62,6 +63,8 @@ const posts = Object.values(import.meta.glob('./*.md', { eager: true })) as Cont
             </div>
         </div>
     </main>
+    
+    <ScrollToTop />
 </Layout>
 
 <style>

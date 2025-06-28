@@ -1,0 +1,98 @@
+---
+// 這個組件會在客戶端渲染，所以需要 client:load
+---
+
+<button id="scroll-to-top" class="scroll-to-top" aria-label="回到頂部">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 4L4 12H9V20H15V12H20L12 4Z" fill="currentColor"/>
+  </svg>
+</button>
+
+<script>
+  // 回到頂部功能
+  document.addEventListener('DOMContentLoaded', function() {
+    const scrollToTopBtn = document.getElementById('scroll-to-top');
+    
+    if (!scrollToTopBtn) return;
+    
+    // 檢查滾動位置，決定是否顯示按鈕
+    function toggleScrollButton() {
+      if (window.pageYOffset > 300) {
+        scrollToTopBtn!.classList.add('visible');
+      } else {
+        scrollToTopBtn!.classList.remove('visible');
+      }
+    }
+    
+    // 點擊回到頂部
+    scrollToTopBtn.addEventListener('click', function() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+    
+    // 監聽滾動事件
+    window.addEventListener('scroll', toggleScrollButton);
+    
+    // 初始化檢查
+    toggleScrollButton();
+  });
+</script>
+
+<style>
+  .scroll-to-top {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 50px;
+    height: 50px;
+    background: rgba(52, 152, 219, 0.9);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    z-index: 1000;
+  }
+  
+  .scroll-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+  
+  .scroll-to-top:hover {
+    background: #3498db;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  }
+  
+  .scroll-to-top:active {
+    transform: translateY(0);
+  }
+  
+  .scroll-to-top svg {
+    transition: transform 0.3s ease;
+  }
+  
+  .scroll-to-top:hover svg {
+    transform: translateY(-2px);
+  }
+  
+  @media (max-width: 768px) {
+    .scroll-to-top {
+      bottom: 1.5rem;
+      right: 1.5rem;
+      width: 45px;
+      height: 45px;
+    }
+  }
+</style> 

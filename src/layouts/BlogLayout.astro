@@ -3,6 +3,7 @@ import Layout from './Layout.astro';
 import GiscusComments from '../components/GiscusComments.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import Navigation from '../components/Navigation.astro';
+import ScrollToTop from '../components/ScrollToTop.astro';
 
 const { frontmatter } = Astro.props;
 const { title, lang = 'en' } = frontmatter;
@@ -29,6 +30,8 @@ const { title, lang = 'en' } = frontmatter;
       />
     </section>
   </main>
+  
+  <ScrollToTop />
 </Layout>
 
 <style>
@@ -36,7 +39,7 @@ const { title, lang = 'en' } = frontmatter;
     max-width: 800px;
     margin: 0 auto;
     padding: 0 1.5rem;
-    padding-top: 1rem;
+    padding-top: 6rem;
   }
 
   .blog-content {
@@ -60,7 +63,7 @@ const { title, lang = 'en' } = frontmatter;
   @media (max-width: 768px) {
     .blog-container {
       padding: 0 1rem;
-      padding-top: 0.5rem;
+      padding-top: 5rem;
     }
 
     .blog-content {
