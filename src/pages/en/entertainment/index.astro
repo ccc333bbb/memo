@@ -2,18 +2,19 @@
 import Layout from '../../../layouts/Layout.astro';
 import type { ContentEntry } from '../../../types/content';
 import Navigation from '../../../components/Navigation.astro';
+import Breadcrumb from '../../../components/Breadcrumb.astro';
 
 const reviews = Object.values(import.meta.glob('./*.md', { eager: true })) as ContentEntry[];
 
 // Define entertainment content categories
-const categories = {
+const categories: Record<string, { name: string; icon: string }> = {
   movie: { name: 'Movies', icon: '🎬' },
   tv: { name: 'TV Shows', icon: '📺' },
   book: { name: 'Books', icon: '📚' },
   manga: { name: 'Manga', icon: '📖' },
   anime: { name: 'Anime', icon: '🎭' },
   game: { name: 'Games', icon: '🎮' },
-  other: { name: 'Others', icon: '🎪' }
+  other: { name: 'Other', icon: '🎪' }
 };
 
 // Group content by category
@@ -29,6 +30,7 @@ const reviewsByCategory = reviews.reduce((acc, review) => {
 
 <Layout title="Entertainment - ccc333bbb" lang="en">
     <Navigation lang="en" currentPath={Astro.url.pathname} />
+    <Breadcrumb lang="en" currentPath={Astro.url.pathname} title="Entertainment" />
 
     <main class="main-content">
         <div class="ink-bg ink-effect"></div>

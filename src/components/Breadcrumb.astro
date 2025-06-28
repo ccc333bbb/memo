@@ -15,7 +15,7 @@ const breadcrumbConfig = {
     thoughts: 'Thoughts',
     projects: 'Projects',
     bookmarks: 'Bookmarks',
-    movieReview: 'Movie Reviews',
+    entertainment: 'Entertainment',
     back: '← Back'
   },
   zh: {
@@ -24,7 +24,7 @@ const breadcrumbConfig = {
     thoughts: '想法',
     projects: '项目',
     bookmarks: '书签',
-    movieReview: '观影心得',
+    entertainment: '娱乐分享',
     back: '← 返回'
   },
   tw: {
@@ -33,7 +33,7 @@ const breadcrumbConfig = {
     thoughts: '想法',
     projects: '專案',
     bookmarks: '書籤',
-    movieReview: '觀影心得',
+    entertainment: '娛樂分享',
     back: '← 返回'
   }
 };
@@ -77,9 +77,9 @@ const generateBreadcrumbs = () => {
         sectionLabel = config.bookmarks;
         sectionPath = `/memo/${lang}/bookmarks/`;
         break;
-      case 'movie-review':
-        sectionLabel = config.movieReview;
-        sectionPath = `/memo/${lang}/movie-review/`;
+      case 'entertainment':
+        sectionLabel = config.entertainment;
+        sectionPath = `/memo/${lang}/entertainment/`;
         break;
     }
     

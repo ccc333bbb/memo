@@ -2,12 +2,14 @@
 import Layout from '../../../layouts/Layout.astro';
 import type { ContentEntry } from '../../../types/content';
 import Navigation from '../../../components/Navigation.astro';
+import Breadcrumb from '../../../components/Breadcrumb.astro';
 
 const posts = Object.values(import.meta.glob('./*.md', { eager: true })) as ContentEntry[];
 ---
 
 <Layout title="書籤 - ccc333bbb" lang="tw">
     <Navigation lang="tw" currentPath={Astro.url.pathname} />
+    <Breadcrumb lang="tw" currentPath={Astro.url.pathname} title="書籤" />
 
     <main class="main-content">
         <div class="ink-bg ink-effect"></div>

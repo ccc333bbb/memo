@@ -2,11 +2,12 @@
 import Layout from '../../../layouts/Layout.astro';
 import type { ContentEntry } from '../../../types/content';
 import Navigation from '../../../components/Navigation.astro';
+import Breadcrumb from '../../../components/Breadcrumb.astro';
 
 const reviews = Object.values(import.meta.glob('./*.md', { eager: true })) as ContentEntry[];
 
 // 定義娛樂內容分類
-const categories = {
+const categories: Record<string, { name: string; icon: string }> = {
   movie: { name: '電影', icon: '🎬' },
   tv: { name: '電視劇', icon: '📺' },
   book: { name: '小說', icon: '📚' },
@@ -29,6 +30,7 @@ const reviewsByCategory = reviews.reduce((acc, review) => {
 
 <Layout title="娛樂分享 - ccc333bbb" lang="tw">
     <Navigation lang="tw" currentPath={Astro.url.pathname} />
+    <Breadcrumb lang="tw" currentPath={Astro.url.pathname} title="娛樂分享" />
 
     <main class="main-content">
         <div class="ink-bg ink-effect"></div>
