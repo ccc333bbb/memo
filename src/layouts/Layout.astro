@@ -32,6 +32,7 @@ const { title = SITE_CONFIG.title, lang = SITE_CONFIG.defaultLanguage } = Astro.
         background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
         min-height: 100vh;
         color: #2c3e50;
+        padding-top: 80px; /* 統一為主導覽列預留空間 */
     }
     
     /* 水墨風格全局樣式 */
@@ -46,5 +47,12 @@ const { title = SITE_CONFIG.title, lang = SITE_CONFIG.defaultLanguage } = Astro.
         background: rgba(255, 255, 255, 0.8);
         backdrop-filter: blur(10px);
         border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    /* 響應式導覽列間距 */
+    @media (max-width: 768px) {
+        body {
+            padding-top: 70px; /* 手機版間距 */
+        }
     }
 </style>

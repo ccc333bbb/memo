@@ -64,11 +64,11 @@ import Navigation from '../../components/Navigation.astro';
     /* 主要內容 */
     .main-content {
         position: relative;
-        min-height: 100vh;
+        min-height: calc(100vh - 80px);
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 6rem 2rem 2rem;
+        padding: 2rem;
     }
     
     .ink-bg {
@@ -206,7 +206,8 @@ import Navigation from '../../components/Navigation.astro';
     /* 響應式 */
     @media (max-width: 768px) {
         .main-content {
-            padding: 5rem 1rem 2rem;
+            padding: 1rem;
+            min-height: calc(100vh - 70px);
         }
         
         .name {

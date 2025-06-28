@@ -142,16 +142,18 @@ const showBreadcrumb = breadcrumbs.length > 1; // 只有當有多於一個麵包
 
 <style>
   .breadcrumb {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    padding: 0.75rem 0;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    padding: 1rem 0;
     margin-bottom: 2rem;
     position: sticky;
-    top: 64px; /* 導航欄高度 */
+    top: 0;
     z-index: 99;
     width: 100%;
     box-sizing: border-box;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
   }
   
   .breadcrumb-container {
@@ -241,11 +243,10 @@ const showBreadcrumb = breadcrumbs.length > 1; // 只有當有多於一個麵包
       padding: 0 1rem;
     }
   }
-  @media (max-width: 600px) {
+  @media (max-width: 768px) {
     .breadcrumb {
-      top: 56px;
-      padding: 0.5rem 0;
-      margin-bottom: 1rem;
+      padding: 0.75rem 0;
+      margin-bottom: 1.5rem;
     }
     .breadcrumb-container {
       flex-direction: column;

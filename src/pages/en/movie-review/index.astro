@@ -47,8 +47,8 @@ const reviews = Object.values(import.meta.glob('./*.md', { eager: true })) as Co
 <style>
     .main-content {
         position: relative;
-        min-height: 100vh;
-        padding: 6rem 2rem 2rem;
+        min-height: calc(100vh - 70px);
+        padding: 2rem;
     }
     .ink-bg {
         position: fixed;
@@ -126,7 +126,8 @@ const reviews = Object.values(import.meta.glob('./*.md', { eager: true })) as Co
     }
     @media (max-width: 768px) {
         .main-content {
-            padding: 5rem 1rem 2rem;
+            padding: 1rem;
+            min-height: calc(100vh - 60px);
         }
         .blog-header h1 {
             font-size: 2rem;
