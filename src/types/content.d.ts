@@ -6,6 +6,7 @@ export interface ContentFrontmatter {
   date?: string | Date;
   tags?: string[];
   category?: string;
+  rating?: number;
   projectStatus?: 'completed' | 'in-progress' | 'archived';
   techStack?: string[];
   sourceUrl?: string;

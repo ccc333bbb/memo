@@ -8,7 +8,7 @@ export const NAVIGATION_LABELS = {
     thoughts: 'Thoughts',
     projects: 'Projects',
     bookmarks: 'Bookmarks',
-    movieReview: 'Movie Reviews',
+    entertainment: 'Entertainment',
   },
   zh: {
     home: '首页',
@@ -16,7 +16,7 @@ export const NAVIGATION_LABELS = {
     thoughts: '想法', 
     projects: '项目',
     bookmarks: '书签',
-    movieReview: '观影心得',
+    entertainment: '娱乐分享',
   },
   tw: {
     home: '首頁',
@@ -24,7 +24,7 @@ export const NAVIGATION_LABELS = {
     thoughts: '想法',
     projects: '專案', 
     bookmarks: '書籤',
-    movieReview: '觀影心得',
+    entertainment: '娛樂分享',
   },
 } as const;
 
@@ -54,9 +54,9 @@ export function getNavigationConfig(lang: Language) {
       label: labels.bookmarks, 
       path: `${basePath}/bookmarks/` 
     },
-    movieReview: { 
-      label: labels.movieReview, 
-      path: `${basePath}/movie-review/` 
+    entertainment: { 
+      label: labels.entertainment, 
+      path: `${basePath}/entertainment/` 
     },
   };
 }
