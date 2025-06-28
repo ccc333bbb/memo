@@ -109,35 +109,42 @@ const showBreadcrumb = breadcrumbs.length > 1; // 只有當有多於一個麵包
 ---
 
 {showBreadcrumb && (
-  <nav class="breadcrumb" aria-label="Breadcrumb">
-    <div class="breadcrumb-container">
-      <ol class="breadcrumb-list">
-        {breadcrumbs.map((crumb, index) => (
-          <li class="breadcrumb-item">
-            {index === breadcrumbs.length - 1 ? (
-              <span class="breadcrumb-current" aria-current="page">
-                {crumb.label}
-              </span>
-            ) : (
-              <a href={crumb.path} class="breadcrumb-link">
-                {crumb.label}
-              </a>
-            )}
-            {index < breadcrumbs.length - 1 && (
-              <span class="breadcrumb-separator">/</span>
-            )}
-          </li>
-        ))}
-      </ol>
-      
-      {/* 返回按鈕 */}
-      {breadcrumbs.length > 2 && (
-        <a href={breadcrumbs[breadcrumbs.length - 2].path} class="back-button">
-          {config.back}
-        </a>
-      )}
-    </div>
-  </nav>
+  <>
+    <script>
+      // 為 body 添加 has-breadcrumb 類
+      document.body.classList.add('has-breadcrumb');
+    </script>
+    
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <div class="breadcrumb-container">
+        <ol class="breadcrumb-list">
+          {breadcrumbs.map((crumb, index) => (
+            <li class="breadcrumb-item">
+              {index === breadcrumbs.length - 1 ? (
+                <span class="breadcrumb-current" aria-current="page">
+                  {crumb.label}
+                </span>
+              ) : (
+                <a href={crumb.path} class="breadcrumb-link">
+                  {crumb.label}
+                </a>
+              )}
+              {index < breadcrumbs.length - 1 && (
+                <span class="breadcrumb-separator">/</span>
+              )}
+            </li>
+          ))}
+        </ol>
+        
+        {/* 返回按鈕 */}
+        {breadcrumbs.length > 2 && (
+          <a href={breadcrumbs[breadcrumbs.length - 2].path} class="back-button">
+            {config.back}
+          </a>
+        )}
+      </div>
+    </nav>
+  </>
 )}
 
 <style>
