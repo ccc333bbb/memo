@@ -2,12 +2,14 @@
 import Layout from './Layout.astro';
 import GiscusComments from '../components/GiscusComments.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
+import Navigation from '../components/Navigation.astro';
 
 const { frontmatter } = Astro.props;
 const { title, lang = 'en' } = frontmatter;
 ---
 
 <Layout title={title} lang={lang}>
+  <Navigation lang={lang} currentPath={Astro.url.pathname} />
   <Breadcrumb 
     lang={lang} 
     currentPath={Astro.url.pathname} 
