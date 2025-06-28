@@ -36,8 +36,8 @@ const isActive = (path: string) => isActivePath(currentPath, path);
       <a href={navigationConfig.bookmarks.path} class={`nav-link ${isActive(navigationConfig.bookmarks.path) ? 'active' : ''}`}>
         {navigationConfig.bookmarks.label}
       </a>
-      <a href={navigationConfig.movieReview.path} class={`nav-link ${isActive(navigationConfig.movieReview.path) ? 'active' : ''}`}>
-        {navigationConfig.movieReview.label}
+      <a href={navigationConfig.entertainment.path} class={`nav-link ${isActive(navigationConfig.entertainment.path) ? 'active' : ''}`}>
+        {navigationConfig.entertainment.label}
       </a>
       <div class="lang-switcher">
         {languageSwitcher.map((langConfig) => (
